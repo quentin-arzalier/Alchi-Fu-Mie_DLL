@@ -32,7 +32,7 @@ namespace AFM_DLL.Models.PlayerInfo
         ///     Indique si le deck est valide et utilisable. <br/>
         ///     Un deck valide possède 10 éléments, 10 sortilèges, et pas plus de 3 exemplaires du même sortilège.
         /// </summary>
-        public bool IsDeckValid => Hero != null && Elements.Count == 10 && Spells.Count == 10 && Spells.GroupBy(s => s.SpellType).Max(grp => grp.Count()) <= 3;
+        public bool IsDeckValid => Hero != null && Elements.Count == 10 && Spells.Count == 10 && Spells.GroupBy(s => s.GetSpellType()).Max(grp => grp.Count()) <= 3;
 
         /// <summary>
         ///     Ajoute un élément au deck d'élément
@@ -77,7 +77,7 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </returns>
         public bool AddSpell(SpellCard card)
         {
-            var nbSameSpellsInDeck = Spells.Count(c => c.SpellType == card.SpellType);
+            var nbSameSpellsInDeck = Spells.Count(c => c.GetSpellType() == card.GetSpellType());
             if (Spells.Count >= 10 || nbSameSpellsInDeck >= 3)
                 return false;
             Spells.Add(card);
@@ -94,7 +94,7 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </returns>
         public bool RemoveSpell(SpellCard card)
         {
-            var eltToRemove = Spells.FirstOrDefault(c => c.SpellType == card.SpellType);
+            var eltToRemove = Spells.FirstOrDefault(c => c.GetSpellType() == card.GetSpellType());
             return Spells.Remove(eltToRemove);
         }
 

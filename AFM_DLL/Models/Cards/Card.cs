@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AFM_DLL.Models.BoardData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,22 @@ namespace AFM_DLL.Models.Cards
     /// </summary>
     public abstract class Card
     {
+        /// <summary>
+        ///     Permet d'ajouter une carte au plateau donné
+        /// </summary>
+        /// <param name="board">Le plateau de jeu sur lequel l'opération a lieu</param>
+        /// <param name="isBlueSide">Indique si c'est le joueur bleu ou le joueur rouge qui joue la carte</param>
+        /// <param name="position">Indique sur quelle colonne la carte doit être ajoutée (null pour les sortilèges)</param>
+        /// <returns>Si l'ajout de carte a eu lieu avec succès</returns>
+        public abstract bool AddToBoard(Board board, bool isBlueSide, BoardPosition? position);
+
+        /// <summary>
+        ///     Permet de retirer une carte au plateau donné
+        /// </summary>
+        /// <param name="board">Le plateau de jeu sur lequel l'opération a lieu</param>
+        /// <param name="isBlueSide">Indique si c'est le joueur bleu ou le joueur rouge qui retire la carte</param>
+        /// <param name="position">Indique sur quelle colonne la carte doit être retirée (null pour les sortilèges)</param>
+        /// <returns>Si le retrait de carte a eu lieu avec succès</returns>
+        public abstract bool RemoveFromBoard(Board board, bool isBlueSide, BoardPosition? position);
     }
 }

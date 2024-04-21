@@ -42,13 +42,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Models\BoardData\Board.cs" />
+    <Compile Include="Models\BoardData\BoardModifiers.cs" />
+    <Compile Include="Models\BoardData\BoardPosition.cs" />
+    <Compile Include="Models\BoardData\BoardSide.cs" />
     <Compile Include="Models\Cards\Card.cs" />
     <Compile Include="Models\Cards\ElementCard.cs" />
     <Compile Include="Helpers\FightHelper.cs" />
     <Compile Include="Models\Cards\Spells\AddManaFromElement\AddManaFromScissorsSpell.cs" />
     <Compile Include="Models\Cards\Spells\AddManaFromElement\AddManaFromPaperSpell.cs" />
     <Compile Include="Models\Cards\Spells\AddManaFromElement\AddManaFromRockSpell.cs" />
-    <Compile Include="Models\Cards\Spells\AddManaFromElement\DoubleDamageSpell.cs" />
+    <Compile Include="Models\Cards\Spells\DoubleDamageSpell.cs" />
     <Compile Include="Models\Cards\Spells\SpellCard.cs" />
     <Compile Include="Models\Enum\Element.cs" />
     <Compile Include="Models\Enum\FightResult.cs" />
@@ -56,6 +60,7 @@
     <Compile Include="Models\PlayerInfo\Deck.cs" />
     <Compile Include="Models\PlayerInfo\Hand.cs" />
     <Compile Include="Models\PlayerInfo\Hero.cs" />
+    <Compile Include="Models\PlayerInfo\PlayerGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

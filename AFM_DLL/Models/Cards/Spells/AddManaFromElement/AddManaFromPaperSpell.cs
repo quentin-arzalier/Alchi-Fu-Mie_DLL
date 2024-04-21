@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AFM_DLL.Models.BoardData;
+using AFM_DLL.Models.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +13,10 @@ namespace AFM_DLL.Models.Cards.Spells
     /// </summary>
     public class AddManaFromPaperSpell : SpellCard
     {
-        public override void ActivateSpell()
+        public override void ActivateSpell(Board board, bool isBlueSide)
         {
-            throw new NotImplementedException();
+            var count = board.AllElementsOfBoard.Count(c => c.ActiveElement == Element.PAPER);
+            board.GetAllyBoardSide(isBlueSide).Player.AddMana(count);
         }
 
         public override string GetDescription()
@@ -24,6 +27,11 @@ namespace AFM_DLL.Models.Cards.Spells
         public override int GetManaCost()
         {
             return 2;
+        }
+
+        public override SpellType GetSpellType()
+        {
+            return SpellType.ADD_MANA_FROM_PAPER;
         }
     }
 }
