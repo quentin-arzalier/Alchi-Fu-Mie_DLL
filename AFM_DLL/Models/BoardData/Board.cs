@@ -22,6 +22,9 @@ namespace AFM_DLL.Models.BoardData
         {
             BlueSide.Player = bluePlayer;
             RedSide.Player = redPlayer;
+
+            BlueSide.Player.Deck.Shuffle();
+            RedSide.Player.Deck.Shuffle();
         }
 
 
