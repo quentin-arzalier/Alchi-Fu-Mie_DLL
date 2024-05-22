@@ -5,8 +5,17 @@
     /// </summary>
     public enum Element
     {
+        /// <summary>
+        ///     Pierre
+        /// </summary>
         ROCK,
+        /// <summary>
+        ///     Feuille
+        /// </summary>
         PAPER,
+        /// <summary>
+        ///     Ciseaux
+        /// </summary>
         SCISSORS
     }
 }

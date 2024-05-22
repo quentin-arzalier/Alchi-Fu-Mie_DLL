@@ -1,9 +1,5 @@
 ﻿using AFM_DLL.Models.BoardData;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_DLL.Models.Cards
 {
@@ -12,8 +8,12 @@ namespace AFM_DLL.Models.Cards
     /// </summary>
     public class ElementCard : Card
     {
-
-        public ElementCard(Element element) {
+        /// <summary>
+        ///     Constructeur d'une carte élément
+        /// </summary>
+        /// <param name="element">L'élément initial de la carte</param>
+        public ElementCard(Element element)
+        {
             InitialElement = element;
         }
 
@@ -27,9 +27,9 @@ namespace AFM_DLL.Models.Cards
         /// </summary>
         private Element InitialElement { get; set; }
 
+
+
         private Element? _override;
-
-
         /// <summary>
         ///     Surcharge d'élément de la carte (potentiellement dû à un sortilège)
         /// </summary>
@@ -42,19 +42,24 @@ namespace AFM_DLL.Models.Cards
             set
             {
                 _override = value;
-                CardOverrided.Invoke(value);
+                CardOverrideChanged.Invoke(value);
             }
         }
 
-        public event Action<Element?> CardOverrided;
+        /// <summary>
+        ///     Évènement indiquand quand une carte voit son type surchargé (ou désurchargé)
+        /// </summary>
+        public event Action<Element?> CardOverrideChanged;
 
+
+        /// <inheritdoc/>
         public override bool AddToBoard(Board board, bool isBlueSide, BoardPosition? position)
         {
             if (!position.HasValue)
                 return false;
 
             var side = board.GetAllyBoardSide(isBlueSide);
-            
+
             if (side.ElementCards.ContainsKey(position.Value) && side.ElementCards[position.Value] != null)
             {
                 if (!side.ElementCards[position.Value].RemoveFromBoard(board, isBlueSide, position))
@@ -66,6 +71,7 @@ namespace AFM_DLL.Models.Cards
             return true;
         }
 
+        /// <inheritdoc/>
         public override bool RemoveFromBoard(Board board, bool isBlueSide, BoardPosition? position)
         {
             if (!position.HasValue)
@@ -75,7 +81,7 @@ namespace AFM_DLL.Models.Cards
 
             if (!side.ElementCards.ContainsKey(position.Value))
                 return false;
-            
+
             if (side.ElementCards[position.Value].InitialElement != this.InitialElement)
                 return false;
 

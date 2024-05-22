@@ -3,11 +3,6 @@ using AFM_DLL.Models.Cards.Spells;
 using AFM_DLL.Models.Cards.Spells.ReplaceElement;
 using AFM_DLL.Models.Enum;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_DLL.Models.Cards
 {
@@ -78,6 +73,7 @@ namespace AFM_DLL.Models.Cards
         public abstract void ActivateSpell(Board board, bool isBlueSide);
 
 
+        /// <inheritdoc/>
         public override bool AddToBoard(Board board, bool isBlueSide, BoardPosition? position)
         {
             if (position.HasValue)
@@ -95,13 +91,14 @@ namespace AFM_DLL.Models.Cards
                 currSpell?.AddToBoard(board, isBlueSide, null);
                 return false;
             }
-            
+
             side.SpellCard = this;
             side.Player.RemoveMana(GetManaCost());
             side.Player.Hand.Spells.Remove(this);
             return true;
         }
-        
+
+        /// <inheritdoc/>
         public override bool RemoveFromBoard(Board board, bool isBlueSide, BoardPosition? position)
         {
             if (position.HasValue)

@@ -3,8 +3,6 @@ using AFM_DLL.Models.Cards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_DLL.Models.PlayerInfo
 {
@@ -13,6 +11,10 @@ namespace AFM_DLL.Models.PlayerInfo
     /// </summary>
     public class PlayerGame
     {
+        /// <summary>
+        ///     Initialise l'état d'un joueur
+        /// </summary>
+        /// <param name="initialDeck"></param>
         public PlayerGame(Deck initialDeck)
         {
             HealthPoints = 20;
@@ -23,14 +25,35 @@ namespace AFM_DLL.Models.PlayerInfo
         }
 
 
+        /// <summary>
+        ///     Évènement se déclanchant quand le joueur meurt/perd.
+        /// </summary>
         public event Action PlayerDied;
+
+        /// <summary>
+        ///     Nombre de points de vie du joueur.
+        /// </summary>
         public int HealthPoints { get; private set; }
+
+        /// <summary>
+        ///     Nombre de points de mana du joueur
+        /// </summary>
         public int ManaPoints { get; private set; }
+
+        /// <summary>
+        ///     Main du joueur
+        /// </summary>
         public Hand Hand { get; private set; }
+        /// <summary>
+        ///     Cartes du joueur
+        /// </summary>
         public Deck Deck { get; private set; }
+        /// <summary>
+        ///     Défausse du joueur
+        /// </summary>
         public List<Card> Defausse { get; private set; }
 
-        
+
 
         /// <summary>
         ///     Ajoute du mana au joueur
@@ -91,6 +114,9 @@ namespace AFM_DLL.Models.PlayerInfo
             PlayerDied.Invoke();
         }
 
+        /// <summary>
+        ///     Donne jusqu'à 4 éléments au joueur ainsi qu'une carte sortilège (s'il en reste)
+        /// </summary>
         public void Draw()
         {
             while (Hand.Elements.Count < 4)

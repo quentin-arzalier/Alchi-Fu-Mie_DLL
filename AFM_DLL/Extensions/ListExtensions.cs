@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 
 namespace AFM_DLL.Extensions
 {
+    /// <summary>
+    ///     Contient des méthodes pratiques pour les listes.
+    /// </summary>
     public static class ListExtensions
     {
         /// <summary>

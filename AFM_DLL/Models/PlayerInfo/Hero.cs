@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_DLL.Models.PlayerInfo
 {
@@ -11,12 +7,20 @@ namespace AFM_DLL.Models.PlayerInfo
     /// </summary>
     public class Hero
     {
+        /// <summary>
+        ///     Construit un héros
+        /// </summary>
+        /// <param name="name">Le nom du héros</param>
+        /// <param name="element">L'élément initial du héros</param>
         public Hero(string name, Element element)
         {
             Name = name;
             InitialElement = element;
         }
 
+        /// <summary>
+        /// Le nom du Héros
+        /// </summary>
         public string Name { get; private set; }
 
 
@@ -30,9 +34,27 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </summary>
         private Element InitialElement { get; set; }
 
+        private Element? _override;
+
         /// <summary>
         ///     Surcharge d'élément du héros (potentiellement dû à un remplacement)
         /// </summary>
-        public Element? OverrideElement { private get; set; }
+        public Element? OverrideElement
+        {
+            get
+            {
+                return _override;
+            }
+            set
+            {
+                _override = value;
+                HeroOverrideChanged.Invoke(value);
+            }
+        }
+
+        /// <summary>
+        ///     Évènement indiquand quand un héros voit son type surchargé (ou désurchargé)
+        /// </summary>
+        public event Action<Element?> HeroOverrideChanged;
     }
 }

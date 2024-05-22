@@ -1,12 +1,10 @@
 ﻿using AFM_DLL.Models.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_DLL.Helpers
 {
+    /// <summary>
+    /// Contient des méthodes pratiques pour la partie
+    /// </summary>
     public static class FightHelper
     {
         /// <summary>

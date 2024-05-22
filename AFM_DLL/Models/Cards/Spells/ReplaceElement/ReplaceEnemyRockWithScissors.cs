@@ -1,15 +1,15 @@
 ﻿using AFM_DLL.Models.BoardData;
 using AFM_DLL.Models.Enum;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
 {
+    /// <summary>
+    ///     Remplace les cartes pierre opposées par des cartes ciseaux.
+    /// </summary>
     public class ReplaceEnemyRockWithScissors : SpellCard
     {
+        /// <inheritdoc/>
         public override void ActivateSpell(Board board, bool isBlueSide)
         {
             var enemyrocks = board.GetEnemyBoardSide(isBlueSide).AllElementsOfSide
@@ -21,16 +21,19 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
             }
         }
 
+        /// <inheritdoc/>
         public override string GetDescription()
         {
             return "Remplace les cartes Pierre de l'adversaire par des cartes Ciseaux.";
         }
 
+        /// <inheritdoc/>
         public override int GetManaCost()
         {
             return 4;
         }
 
+        /// <inheritdoc/>
         public override SpellType GetSpellType()
         {
             return SpellType.REPLACE_ENEMY_ROCK_WITH_SCISSORS;
