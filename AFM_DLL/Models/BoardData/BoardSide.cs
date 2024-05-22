@@ -13,12 +13,12 @@ namespace AFM_DLL.Models.BoardData
         /// <summary>
         ///     Le joueur auquel appartient ce côté du plateau
         /// </summary>
-        public PlayerGame Player { get; set; }
+        public PlayerGame Player { get; internal set; }
 
         /// <summary>
         ///     Les cartes éléments placées (ou non) par le joueur sur les trois colonnes.
         /// </summary>
-        public Dictionary<BoardPosition, ElementCard> ElementCards { get; set; } = new Dictionary<BoardPosition, ElementCard>()
+        public Dictionary<BoardPosition, ElementCard> ElementCards { get; private set; } = new Dictionary<BoardPosition, ElementCard>()
             {
                 { BoardPosition.LEFT, null },
                 { BoardPosition.MIDDLE, null },

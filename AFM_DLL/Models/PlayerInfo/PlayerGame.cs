@@ -1,5 +1,6 @@
 ﻿using AFM_DLL.Extensions;
 using AFM_DLL.Models.Cards;
+using AFM_DLL.Models.UnityResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -117,16 +118,21 @@ namespace AFM_DLL.Models.PlayerInfo
         /// <summary>
         ///     Donne jusqu'à 4 éléments au joueur ainsi qu'une carte sortilège (s'il en reste)
         /// </summary>
-        public void Draw()
+        public DrawResult Draw()
         {
+            var res = new DrawResult();
             while (Hand.Elements.Count < 4)
             {
-                Hand.Elements.Add(Deck.Elements.PopFirst());
+                var card = Deck.Elements.PopFirst();
+                res.DrawnElements.Add(card);
+                Hand.Elements.Add(card);
             }
             if (Deck.Spells.Any())
             {
-                Hand.Spells.Add(Deck.Spells.PopFirst());
+                res.DrawnSpell = Deck.Spells.PopFirst();
+                Hand.Spells.Add(res.DrawnSpell);
             }
+            return res;
         }
     }
 }

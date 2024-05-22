@@ -1,4 +1,10 @@
-﻿using AFM_DLL.Models.Enum;
+﻿using AFM_DLL.Models.BoardData;
+using AFM_DLL.Models.Cards;
+using AFM_DLL.Models.Enum;
+using AFM_DLL.Models.UnityResults;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AFM_DLL.Helpers
 {
@@ -34,6 +40,48 @@ namespace AFM_DLL.Helpers
                 default:
                     return FightResult.DRAW;
             }
+        }
+
+        /// <summary>
+        ///     Renvoie les cartes sortilèges dans l'ordre d'évaluation en fonction des héros.
+        ///     Si les héros ont le même type, le résultat est aléatoire.
+        /// </summary>
+        /// <param name="board">Le plateau qui contient les cartes sortilèges à évaluer</param>
+        /// <returns>La liste ordonnées des cartes sortilèges ainsi que leur côté</returns>
+        public static SpellCardEvaluationResult GetOrderedSpellCards(Board board)
+        {
+            var res = new SpellCardEvaluationResult();
+
+            if (board.BlueSide.SpellCard != null && board.RedSide.SpellCard != null)
+            {
+                res.HeroFightResult = ElementFight(
+                    board.BlueSide.Player.Deck.Hero.ActiveElement,
+                    board.RedSide.Player.Deck.Hero.ActiveElement
+                );
+
+                if (res.HeroFightResult == FightResult.WIN || new Random().Next(2) == 0)
+                {
+                    if (res.HeroFightResult.Value == FightResult.DRAW)
+                        res.BlueSideStartedOnDraw = true;
+
+                    res.SpellsInOrder.Add((board.BlueSide.SpellCard, true));
+                    res.SpellsInOrder.Add((board.RedSide.SpellCard, false));
+                }
+                else
+                {
+                    res.SpellsInOrder.Add((board.RedSide.SpellCard, false));
+                    res.SpellsInOrder.Add((board.BlueSide.SpellCard, true));
+                }
+            }
+            else if (board.BlueSide.SpellCard != null)
+            {
+                res.SpellsInOrder.Add((board.BlueSide.SpellCard, true));
+            }
+            else if (board.RedSide.SpellCard != null)
+            {
+                res.SpellsInOrder.Add((board.RedSide.SpellCard, false));
+            }
+            return res;
         }
     }
 }

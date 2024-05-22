@@ -19,15 +19,13 @@ namespace AFM_Tests
         [SetUp]
         public void Setup()
         {
-            _board = new Board();
+            _board = new Board(new PlayerGame(TestDecks.GetRockDeck()), new PlayerGame(TestDecks.GetPaperDeck()));
 
-            _board.BlueSide.Player = new PlayerGame(TestDecks.GetRockDeck());
-            _board.BlueSide.Player.Draw();
-            _board.BlueSide.Player.AddMana(10);
+            _board.GetAllyBoardSide(true).Player.Draw();
+            _board.GetAllyBoardSide(true).Player.AddMana(10);
 
-            _board.RedSide.Player = new PlayerGame(TestDecks.GetPaperDeck());
-            _board.RedSide.Player.Draw();
-            _board.RedSide.Player.AddMana(10);
+            _board.GetEnemyBoardSide(true).Player.Draw();
+            _board.GetEnemyBoardSide(true).Player.AddMana(10);
         }
 
         [Test]
@@ -35,16 +33,16 @@ namespace AFM_Tests
         {
             Assert.Multiple(() =>
             {
-                Assert.That(_board.BlueSide.Player?.Hand.Elements.Count, Is.EqualTo(4));
-                Assert.That(_board.RedSide.Player?.Hand.Elements.Count, Is.EqualTo(4));
-                Assert.That(_board.BlueSide.Player?.Hand.Spells.Count, Is.EqualTo(1));
-                Assert.That(_board.RedSide.Player?.Hand.Spells.Count, Is.EqualTo(1));
+                Assert.That(_board.GetAllyBoardSide(true).Player?.Hand.Elements.Count, Is.EqualTo(4));
+                Assert.That(_board.GetEnemyBoardSide(true).Player?.Hand.Elements.Count, Is.EqualTo(4));
+                Assert.That(_board.GetAllyBoardSide(true).Player?.Hand.Spells.Count, Is.EqualTo(1));
+                Assert.That(_board.GetEnemyBoardSide(true).Player?.Hand.Spells.Count, Is.EqualTo(1));
 
-                Assert.That(_board.RedSide.ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
-                Assert.That(_board.BlueSide.ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
+                Assert.That(_board.GetEnemyBoardSide(true).ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
+                Assert.That(_board.GetAllyBoardSide(true).ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
 
-                Assert.That(_board.RedSide.SpellCard, Is.EqualTo(null));
-                Assert.That(_board.BlueSide.SpellCard, Is.EqualTo(null));
+                Assert.That(_board.GetEnemyBoardSide(true).SpellCard, Is.EqualTo(null));
+                Assert.That(_board.GetAllyBoardSide(true).SpellCard, Is.EqualTo(null));
             });
         }
 
