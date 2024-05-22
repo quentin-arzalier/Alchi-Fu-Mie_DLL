@@ -1,5 +1,6 @@
 ﻿using AFM_DLL.Models.BoardData;
 using AFM_DLL.Models.Cards.Spells;
+using AFM_DLL.Models.Cards.Spells.ReplaceElement;
 using AFM_DLL.Models.Enum;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,8 @@ namespace AFM_DLL.Models.Cards
                     return new AddManaFromScissorsSpell();
                 case SpellType.DOUBLE_DAMAGE:
                     return new DoubleDamageSpell();
+                case SpellType.REPLACE_ENEMY_ROCK_WITH_SCISSORS:
+                    return new ReplaceEnemyRockWithScissors();
                 default:
                     throw new NotImplementedException($"Le sort de type {spell} n'a pas de classe attitrée.");
             }
@@ -72,7 +75,7 @@ namespace AFM_DLL.Models.Cards
         /// </summary>
         /// <param name="board">Le plateau d'activation, permettant au sort d'accéder aux différents éléments de la partie</param>
         /// <param name="isBlueSide">Indique si le sortilège est lancé depuis le côté bleu de la partie</param>
-        public abstract void ActivateSpell(Board board, bool isBlueSide); // TODO : pass board
+        public abstract void ActivateSpell(Board board, bool isBlueSide);
 
 
         public override bool AddToBoard(Board board, bool isBlueSide, BoardPosition? position)

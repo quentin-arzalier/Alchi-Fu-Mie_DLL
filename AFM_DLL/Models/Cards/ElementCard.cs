@@ -27,10 +27,26 @@ namespace AFM_DLL.Models.Cards
         /// </summary>
         private Element InitialElement { get; set; }
 
+        private Element? _override;
+
+
         /// <summary>
         ///     Surcharge d'élément de la carte (potentiellement dû à un sortilège)
         /// </summary>
-        public Element? OverrideElement { private get; set; }
+        public Element? OverrideElement
+        {
+            get
+            {
+                return _override;
+            }
+            set
+            {
+                _override = value;
+                CardOverrided.Invoke(value);
+            }
+        }
+
+        public event Action<Element?> CardOverrided;
 
         public override bool AddToBoard(Board board, bool isBlueSide, BoardPosition? position)
         {

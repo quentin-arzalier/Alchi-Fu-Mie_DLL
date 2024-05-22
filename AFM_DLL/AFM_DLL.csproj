@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\AFM_DLL.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,6 +54,7 @@
     <Compile Include="Models\Cards\Spells\AddManaFromElement\AddManaFromPaperSpell.cs" />
     <Compile Include="Models\Cards\Spells\AddManaFromElement\AddManaFromRockSpell.cs" />
     <Compile Include="Models\Cards\Spells\DoubleDamageSpell.cs" />
+    <Compile Include="Models\Cards\Spells\ReplaceElement\ReplaceEnemyRockWithScissors.cs" />
     <Compile Include="Models\Cards\Spells\SpellCard.cs" />
     <Compile Include="Models\Enum\Element.cs" />
     <Compile Include="Models\Enum\FightResult.cs" />

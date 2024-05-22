@@ -14,6 +14,9 @@ namespace AFM_DLL.Models.Enum
         ADD_MANA_FROM_ROCK,
         ADD_MANA_FROM_PAPER,
         ADD_MANA_FROM_SCISSORS,
+
         DOUBLE_DAMAGE,
+
+        REPLACE_ENEMY_ROCK_WITH_SCISSORS
     }
 }
