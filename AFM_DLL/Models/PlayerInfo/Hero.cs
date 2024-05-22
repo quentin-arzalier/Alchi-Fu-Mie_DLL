@@ -41,7 +41,7 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </summary>
         public Element? OverrideElement
         {
-            get
+            private get
             {
                 return _override;
             }

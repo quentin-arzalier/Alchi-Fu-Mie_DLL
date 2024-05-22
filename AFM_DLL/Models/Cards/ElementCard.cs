@@ -35,7 +35,7 @@ namespace AFM_DLL.Models.Cards
         /// </summary>
         public Element? OverrideElement
         {
-            get
+            private get
             {
                 return _override;
             }
