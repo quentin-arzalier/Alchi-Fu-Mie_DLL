@@ -124,6 +124,14 @@
                 La méthode a été appelée alors que l'état du plateau ne le permet pas
             </exception>
         </member>
+        <member name="M:AFM_DLL.Models.BoardData.Board.ResetBoard">
+            <summary>
+                Permet de réinitialise le plateau à la fin d'un tour de jeu.
+            </summary>
+            <exception cref="T:System.ApplicationException">
+                La méthode a été appelée alors que l'état du plateau ne le permet pas
+            </exception>
+        </member>
         <member name="T:AFM_DLL.Models.BoardData.BoardModifiers">
             <summary>
                 Correspond aux modificateurs qui peuvent être appliqués au plateau
@@ -209,6 +217,11 @@
                 Phase d'évaluation des éléments
             </summary>
         </member>
+        <member name="F:AFM_DLL.Models.BoardData.BoardState.RESET_BOARD">
+            <summary>
+                Phase de réinitialisation du plateau
+            </summary>
+        </member>
         <member name="T:AFM_DLL.Models.Cards.Card">
             <summary>
             Classe abstraite qui représente toutes les cartes du jeu
@@ -230,6 +243,15 @@
             <param name="board">Le plateau de jeu sur lequel l'opération a lieu</param>
             <param name="isBlueSide">Indique si c'est le joueur bleu ou le joueur rouge qui retire la carte</param>
             <param name="position">Indique sur quelle colonne la carte doit être retirée (null pour les sortilèges)</param>
+            <returns>Si le retrait de carte a eu lieu avec succès</returns>
+        </member>
+        <member name="M:AFM_DLL.Models.Cards.Card.DiscardFromBoardSide(AFM_DLL.Models.BoardData.BoardSide,System.Nullable{AFM_DLL.Models.BoardData.BoardPosition})">
+            <summary>
+                Retire la carte du plateau une fois le tour fini
+            </summary>
+            <param name="side"></param>
+            <param name="position">Indique sur quelle colonne la carte doit être retirée (null pour les sortilèges)</param>
+            
             <returns>Si le retrait de carte a eu lieu avec succès</returns>
         </member>
         <member name="T:AFM_DLL.Models.Cards.ElementCard">

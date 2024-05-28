@@ -44,11 +44,14 @@ namespace AFM_DLL.Models.BoardData
 
         internal bool DiscardSide(bool isBlueSide)
         {
+            var success = true;
             foreach (BoardPosition pos in System.Enum.GetValues(typeof(BoardPosition)))
             {
-                ElementCards[pos]?.DiscardFromBoardSide(this, pos);
+                success &= ElementCards[pos]?.DiscardFromBoardSide(this, pos) ?? true;
             }
-            SpellCard?.DiscardFromBoardSide(this, null);
+            success &= SpellCard?.DiscardFromBoardSide(this, null) ?? true;
+
+            return success;
         }
 
 
