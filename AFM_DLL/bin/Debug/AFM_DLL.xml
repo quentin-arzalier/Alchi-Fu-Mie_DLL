@@ -36,6 +36,17 @@
                 Représente l'état actuel du plateau, l'action à venir
             </summary>
         </member>
+        <member name="M:AFM_DLL.Models.BoardData.Board.CanCardsBePlayedOrRemoved(System.Boolean)">
+            <summary>
+                Indique si des cartes peuvent être jouées du côté indiqué
+            </summary>
+            <param name="isBlueSide">
+                Si le test doit être effectué du côté bleu
+            </param>
+            <returns>
+                Un booléen indiquant si les cartes peuvent être jouées ou retirées.
+            </returns>
+        </member>
         <member name="P:AFM_DLL.Models.BoardData.Board.BlueSide">
             <summary>
                 Contient toutes les informations du côté bleu du plateau

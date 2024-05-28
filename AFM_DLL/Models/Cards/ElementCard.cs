@@ -55,6 +55,9 @@ namespace AFM_DLL.Models.Cards
         /// <inheritdoc/>
         public override bool AddToBoard(Board board, bool isBlueSide, BoardPosition? position)
         {
+            if (base.AddToBoard(board, isBlueSide, position) == false)
+                return false;
+
             if (!position.HasValue)
                 return false;
 
@@ -74,6 +77,9 @@ namespace AFM_DLL.Models.Cards
         /// <inheritdoc/>
         public override bool RemoveFromBoard(Board board, bool isBlueSide, BoardPosition? position)
         {
+            if (base.RemoveFromBoard(board, isBlueSide, position) == false)
+                return false;
+
             if (!position.HasValue)
                 return false;
 

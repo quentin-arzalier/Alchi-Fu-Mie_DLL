@@ -34,6 +34,18 @@ namespace AFM_DLL.Models.BoardData
         public BoardState NextAction { get; private set; } = BoardState.DRAW_CARDS;
 
         /// <summary>
+        ///     Indique si des cartes peuvent être jouées du côté indiqué
+        /// </summary>
+        /// <param name="isBlueSide">
+        ///     Si le test doit être effectué du côté bleu
+        /// </param>
+        /// <returns>
+        ///     Un booléen indiquant si les cartes peuvent être jouées ou retirées.
+        /// </returns>
+        public bool CanCardsBePlayedOrRemoved(bool isBlueSide)
+            => (isBlueSide ? !BlueSide.IsSideReady : !RedSide.IsSideReady) && NextAction == BoardState.PLAY_CARDS;
+
+        /// <summary>
         ///     Contient toutes les informations du côté bleu du plateau
         /// </summary>
         internal BoardSide BlueSide { get; private set; } = new BoardSide();
@@ -80,6 +92,9 @@ namespace AFM_DLL.Models.BoardData
                 throw new ApplicationException($"La fonction DrawCards ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
 
             NextAction = BoardState.PLAY_CARDS;
+
+            BlueSide.IsSideReady = false;
+            RedSide.IsSideReady = false;
 
             var res = new DrawingPhaseResult();
 
