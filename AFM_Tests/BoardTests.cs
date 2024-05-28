@@ -333,5 +333,112 @@ namespace AFM_Tests
 
         #endregion
 
+        #region Boucle de jeu
+
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(5)]
+        [TestCase(10)]
+        public void SkipTurns(int turnstoSkip)
+        {
+            var board = TestBoards.GetBluePlayerPrioBoard();
+
+            for (int i = 0; i < turnstoSkip; i++)
+            {
+                board.DrawCards();
+                board.SetSideReady(isBlueSide: true);
+                board.SetSideReady(isBlueSide: false);
+                board.EvaluateSpells();
+                board.EvaluateCardColumns();
+                board.ResetBoard();
+            }
+        }
+
+        [Test]
+        public void PlayAllCardsUntilDeath()
+        {
+            var board = TestBoards.GetBluePlayerPrioBoard();
+
+            var noDeath = true;
+            void death() { noDeath = false; }
+
+            var bs = board.GetAllyBoardSide(true);
+            var rs = board.GetEnemyBoardSide(true);
+
+            bs.Player.PlayerDied += death;
+            rs.Player.PlayerDied += death;
+
+            while (noDeath)
+            {
+                board.DrawCards();
+
+                foreach (var position in Enum.GetValues<BoardPosition>())
+                {
+                    bs.Player.Hand.Elements[0].AddToBoard(board, true, position);
+                    rs.Player.Hand.Elements[0].AddToBoard(board, false, position);
+                }
+
+                board.SetSideReady(isBlueSide: true);
+                board.SetSideReady(isBlueSide: false);
+
+                board.EvaluateSpells();
+                board.EvaluateCardColumns();
+                board.ResetBoard();
+            }
+        }
+
+        [Test]
+        public void PlayAllCardsWithSpellsUntilDeath()
+        {
+            var board = TestBoards.GetBluePlayerPrioBoard();
+
+            var noDeath = true;
+            void death() { noDeath = false; }
+
+            var bs = board.GetAllyBoardSide(true);
+            var rs = board.GetEnemyBoardSide(true);
+
+            bs.Player.PlayerDied += death;
+            rs.Player.PlayerDied += death;
+
+            while (noDeath)
+            {
+                board.DrawCards();
+
+                foreach (var position in Enum.GetValues<BoardPosition>())
+                {
+                    bs.Player.Hand.Elements[0].AddToBoard(board, true, position);
+                    rs.Player.Hand.Elements[0].AddToBoard(board, false, position);
+                }
+
+                if (bs.Player.Hand.Spells.Count != 0)
+                {
+                    var spellCard = bs.Player.Hand.Spells[0];
+                    if (spellCard.CanBePlayed(bs.Player.ManaPoints))
+                    {
+                        spellCard.AddToBoard(board, true, null);
+                    }
+                }
+
+                if (rs.Player.Hand.Spells.Count != 0)
+                {
+                    var spellCard = rs.Player.Hand.Spells[0];
+                    if (spellCard.CanBePlayed(rs.Player.ManaPoints))
+                    {
+                        spellCard.AddToBoard(board, false, null);
+                    }
+                }
+
+                board.SetSideReady(isBlueSide: true);
+                board.SetSideReady(isBlueSide: false);
+
+                board.EvaluateSpells();
+                board.EvaluateCardColumns();
+                board.ResetBoard();
+            }
+        }
+
+        #endregion Boucle de jeu
+
     }
 }
