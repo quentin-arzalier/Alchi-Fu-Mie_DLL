@@ -101,7 +101,7 @@ namespace AFM_DLL.Models.BoardData
             res.BlueSideDrawResult = BlueSide.Player.Draw();
             BlueSide.Player.AddMana(1);
             res.RedSideDrawResult = RedSide.Player.Draw();
-            BlueSide.Player.AddMana(1);
+            RedSide.Player.AddMana(1);
 
             return res;
         }
