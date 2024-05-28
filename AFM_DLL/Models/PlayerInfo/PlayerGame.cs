@@ -25,7 +25,7 @@ namespace AFM_DLL.Models.PlayerInfo
             ManaPoints = 0;
             Deck = initialDeck;
             Hand = new Hand();
-            Defausse = new List<Card>();
+            Defausse = new List<SpellCard>();
         }
 
 
@@ -55,7 +55,7 @@ namespace AFM_DLL.Models.PlayerInfo
         /// <summary>
         ///     Défausse du joueur
         /// </summary>
-        public List<Card> Defausse { get; private set; }
+        public List<SpellCard> Defausse { get; private set; }
 
 
 

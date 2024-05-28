@@ -93,9 +93,6 @@ namespace AFM_DLL.Models.BoardData
 
             NextAction = BoardState.PLAY_CARDS;
 
-            BlueSide.IsSideReady = false;
-            RedSide.IsSideReady = false;
-
             var res = new DrawingPhaseResult();
 
             res.BlueSideDrawResult = BlueSide.Player.Draw();
@@ -169,7 +166,7 @@ namespace AFM_DLL.Models.BoardData
             if (NextAction != BoardState.EVALUATE_ELEMENTS)
                 throw new ApplicationException($"La fonction EvaluateCardColumns ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
 
-            NextAction = BoardState.DRAW_CARDS;
+            NextAction = BoardState.RESET_BOARD;
 
             var res = new Dictionary<BoardPosition, ColumnFightResult>();
 
@@ -179,6 +176,26 @@ namespace AFM_DLL.Models.BoardData
             }
 
             return res;
+        }
+
+        /// <summary>
+        ///     Permet de réinitialise le plateau à la fin d'un tour de jeu.
+        /// </summary>
+        /// <exception cref="ApplicationException">
+        ///     La méthode a été appelée alors que l'état du plateau ne le permet pas
+        /// </exception>
+        public void ResetBoard()
+        {
+            if (NextAction != BoardState.RESET_BOARD)
+                throw new ApplicationException($"La fonction ResetBoard ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
+
+            BlueSide.IsSideReady = false;
+            BlueSide.DiscardSide(isBlueSide: true);
+
+            RedSide.IsSideReady = false;
+            RedSide.DiscardSide(isBlueSide: false);
+
+            NextAction = BoardState.DRAW_CARDS;
         }
     }
 }

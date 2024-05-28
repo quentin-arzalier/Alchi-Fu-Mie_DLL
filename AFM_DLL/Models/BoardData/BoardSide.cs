@@ -42,6 +42,15 @@ namespace AFM_DLL.Models.BoardData
         /// </summary>
         public bool IsSideReady { get; internal set; }
 
+        internal bool DiscardSide(bool isBlueSide)
+        {
+            foreach (BoardPosition pos in System.Enum.GetValues(typeof(BoardPosition)))
+            {
+                ElementCards[pos]?.DiscardFromBoardSide(this, pos);
+            }
+            SpellCard?.DiscardFromBoardSide(this, null);
+        }
+
 
     }
 }

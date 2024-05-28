@@ -119,5 +119,16 @@ namespace AFM_DLL.Models.Cards
             side.Player.Hand.Spells.Add(this);
             return true;
         }
+
+        internal override bool DiscardFromBoardSide(BoardSide side, BoardPosition? position)
+        {
+            if (position.HasValue)
+                return false;
+
+            side.SpellCard = null;
+            side.Player.Defausse.Add(this);
+
+            return true;
+        }
     }
 }

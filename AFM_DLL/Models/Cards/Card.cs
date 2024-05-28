@@ -30,5 +30,14 @@ namespace AFM_DLL.Models.Cards
         {
             return board.CanCardsBePlayedOrRemoved(isBlueSide);
         }
+
+        /// <summary>
+        ///     Retire la carte du plateau une fois le tour fini
+        /// </summary>
+        /// <param name="side"></param>
+        /// <param name="position">Indique sur quelle colonne la carte doit être retirée (null pour les sortilèges)</param>
+        /// 
+        /// <returns>Si le retrait de carte a eu lieu avec succès</returns>
+        internal abstract bool DiscardFromBoardSide(BoardSide side, BoardPosition? position);
     }
 }

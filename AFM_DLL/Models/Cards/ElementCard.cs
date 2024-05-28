@@ -95,5 +95,18 @@ namespace AFM_DLL.Models.Cards
             side.Player.Hand.Elements.Add(this);
             return true;
         }
+
+        internal override bool DiscardFromBoardSide(BoardSide side, BoardPosition? position)
+        {
+            if (!position.HasValue)
+                return false;
+
+            OverrideElement = null;
+
+            side.ElementCards[position.Value] = null;
+            side.Player.Deck.Elements.Add(this);
+
+            return true;
+        }
     }
 }

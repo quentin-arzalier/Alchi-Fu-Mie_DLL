@@ -29,6 +29,11 @@ namespace AFM_DLL.Models.BoardData
         /// <summary>
         ///     Phase d'évaluation des éléments
         /// </summary>
-        EVALUATE_ELEMENTS
+        EVALUATE_ELEMENTS,
+
+        /// <summary>
+        ///     Phase de réinitialisation du plateau
+        /// </summary>
+        RESET_BOARD
     }
 }
