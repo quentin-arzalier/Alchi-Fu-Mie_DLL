@@ -71,7 +71,9 @@ namespace AFM_DLL.Models.BoardData
         ///     Effectue la phase de tirage du plateau
         /// </summary>
         /// <returns>Un objet contenant des informations sur la </returns>
-        /// <exception cref="ApplicationException"></exception>
+        /// <exception cref="ApplicationException">
+        ///     La méthode a été appelée alors que l'état du plateau ne le permet pas
+        /// </exception>
         public DrawingPhaseResult DrawCards()
         {
             if (NextAction != BoardState.DRAW_CARDS)
@@ -87,15 +89,47 @@ namespace AFM_DLL.Models.BoardData
             return res;
         }
 
+        /// <summary>
+        ///     Indique qu'un côté du plateau a fini son tour
+        /// </summary>
+        /// <param name="isBlueSide">
+        ///     Indique de quel côté du plateau l'opération a lieu
+        /// </param>
+        /// <returns>
+        ///     Un booléen indiquant si les deux joueurs sont prêts et que les sorts peuvent être lancés
+        /// </returns>
+        /// <exception cref="ApplicationException">
+        ///     La méthode a été appelée alors que l'état du plateau ne le permet pas
+        /// </exception>
+        public bool SetSideReady(bool isBlueSide)
+        {
+            if (NextAction != BoardState.PLAY_CARDS)
+                throw new ApplicationException($"La fonction SetSideReady ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
+
+            GetAllyBoardSide(isBlueSide).IsSideReady = true;
+
+            if (BlueSide.IsSideReady && RedSide.IsSideReady)
+            {
+                NextAction = BoardState.EVALUATE_SPELLS;
+                return true;
+            }
+            return false;
+        }
+
 
         /// <summary>
         /// Effectue l'évaluation des sortilèges en jeu
         /// </summary>
         /// <returns>Un objet comprenant toutes les informations résultat de l'évaluation des sortilèges</returns>
+        /// <exception cref="ApplicationException">
+        ///     La méthode a été appelée alors que l'état du plateau ne le permet pas
+        /// </exception>
         public SpellCardEvaluationResult EvaluateSpells()
         {
             if (NextAction != BoardState.EVALUATE_SPELLS)
                 throw new ApplicationException($"La fonction EvaluateSpells ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
+
+            NextAction = BoardState.EVALUATE_ELEMENTS;
 
             var res = FightHelper.GetOrderedSpellCards(this);
             foreach (var card in res.SpellsInOrder) {
@@ -104,5 +138,30 @@ namespace AFM_DLL.Models.BoardData
             return res;
         }
 
+        /// <summary>
+        ///     Évalue chaque colonne du plateau et indique les résultats de tous les combats.
+        /// </summary>
+        /// <returns>
+        ///     Un dictionnaire de résultat de colonne, qui indique pour chaque colonne le déroulement du combat.
+        /// </returns>
+        /// <exception cref="ApplicationException">
+        ///     La méthode a été appelée alors que l'état du plateau ne le permet pas
+        /// </exception>
+        public Dictionary<BoardPosition, ColumnFightResult> EvaluateCardColumns()
+        {
+            if (NextAction != BoardState.EVALUATE_ELEMENTS)
+                throw new ApplicationException($"La fonction EvaluateCardColumns ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
+
+            NextAction = BoardState.DRAW_CARDS;
+
+            var res = new Dictionary<BoardPosition, ColumnFightResult>();
+
+            foreach (BoardPosition pos in System.Enum.GetValues(typeof(BoardPosition)))
+            {
+                res[pos] = FightHelper.EvaluateColumnFight(this, pos);
+            }
+
+            return res;
+        }
     }
 }

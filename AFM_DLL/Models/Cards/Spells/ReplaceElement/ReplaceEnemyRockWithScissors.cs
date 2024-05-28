@@ -28,7 +28,7 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         }
 
         /// <inheritdoc/>
-        public override int GetManaCost()
+        public override uint GetManaCost()
         {
             return 4;
         }

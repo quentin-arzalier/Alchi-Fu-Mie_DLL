@@ -64,6 +64,7 @@
     <Compile Include="Models\PlayerInfo\Hand.cs" />
     <Compile Include="Models\PlayerInfo\Hero.cs" />
     <Compile Include="Models\PlayerInfo\PlayerGame.cs" />
+    <Compile Include="Models\UnityResults\ColumnFightResult.cs" />
     <Compile Include="Models\UnityResults\DrawingPhaseResult.cs" />
     <Compile Include="Models\UnityResults\DrawResult.cs" />
     <Compile Include="Models\UnityResults\SpellCardEvaluationResult.cs" />

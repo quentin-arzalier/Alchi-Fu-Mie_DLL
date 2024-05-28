@@ -16,30 +16,84 @@ namespace AFM_DLL.Helpers
         /// <summary>
         /// Réalise un duel entre deux éléments et indique l'issue du combat par rapport à l'élément de base
         /// </summary>
-        /// <param name="element">
-        ///     L'élément "joueur" pour lequel le résultat renvoyé sera appliqué.
+        /// <param name="blueCard">
+        ///     L'élément bleu du duel.
         /// </param>
-        /// <param name="enemy">
-        ///     L'élément "ennemi" auquel l'élément "joueur" sera comparé
+        /// <param name="redCard">
+        ///     L'élément rouge du duel
         /// </param>
-        /// <returns></returns>
-        public static FightResult ElementFight(Element element, Element enemy)
+        /// <returns>
+        ///     Une enum indiquant l'issue du combat
+        /// </returns>
+        public static FightResult ElementFight(Element blueCard, Element redCard)
         {
-            switch (element)
+            switch (blueCard)
             {
-                case Element.ROCK when enemy == Element.SCISSORS:
-                case Element.SCISSORS when enemy == Element.PAPER:
-                case Element.PAPER when enemy == Element.ROCK:
-                    return FightResult.WIN;
+                case Element.ROCK when redCard == Element.SCISSORS:
+                case Element.SCISSORS when redCard == Element.PAPER:
+                case Element.PAPER when redCard == Element.ROCK:
+                    return FightResult.BLUE_WIN;
 
-                case Element.SCISSORS when enemy == Element.ROCK:
-                case Element.ROCK when enemy == Element.PAPER:
-                case Element.PAPER when enemy == Element.SCISSORS:
-                    return FightResult.LOSE;
+                case Element.SCISSORS when redCard == Element.ROCK:
+                case Element.ROCK when redCard == Element.PAPER:
+                case Element.PAPER when redCard == Element.SCISSORS:
+                    return FightResult.RED_WIN;
 
                 default:
                     return FightResult.DRAW;
             }
+        }
+
+        /// <summary>
+        ///     Effectue les opérations d'un combat de colonne et inflige les dégâts corrects aux joueurs.
+        /// </summary>
+        /// <param name="board">
+        ///     Le plateau de jeu à évaluer
+        /// </param>
+        /// <param name="column">
+        ///     La colonne à évaluer
+        /// </param>
+        /// <returns>
+        ///     Le résultat du combat pour la colonne
+        /// </returns>
+        public static ColumnFightResult EvaluateColumnFight(Board board, BoardPosition column)
+        {
+            var res = new ColumnFightResult();
+
+            var blueBoard = board.GetAllyBoardSide(true);
+            var redBoard = board.GetEnemyBoardSide(true);
+            var blueCard = blueBoard.ElementCards[column];
+            var redCard = redBoard.ElementCards[column];
+            if (blueCard == null)
+                res.CardFightResult = FightResult.RED_WIN;
+            else if (redCard == null)
+                res.CardFightResult = FightResult.BLUE_WIN;
+            else
+                res.CardFightResult = FightHelper.ElementFight(blueCard.ActiveElement, redCard.ActiveElement);
+
+            var blueHero = blueBoard.Player.Deck.Hero;
+            var redHero = redBoard.Player.Deck.Hero;
+            res.HeroFightResult = FightHelper.ElementFight(blueHero.ActiveElement, redHero.ActiveElement);
+
+            // TODO : Voir si on souhaite cumuler les double damage
+            //var damageMultiplier = (uint)Math.Pow(2, board.Modifiers.Count(c => c == BoardModifiers.DOUBLE_DAMAGE));
+            uint damageMultiplier = (uint)(board.Modifiers.Any(c => c == BoardModifiers.DOUBLE_DAMAGE) ? 2 : 1);
+
+            if (res.CardFightResult == FightResult.BLUE_WIN)
+                redBoard.Player.RemoveHealth(damageMultiplier);
+            else if (res.CardFightResult == FightResult.RED_WIN)
+                blueBoard.Player.RemoveHealth(damageMultiplier);
+            else if (res.HeroFightResult == FightResult.BLUE_WIN)
+                redBoard.Player.RemoveHealth(damageMultiplier);
+            else if (res.HeroFightResult == FightResult.RED_WIN)
+                blueBoard.Player.RemoveHealth(damageMultiplier);
+            else
+            {
+                blueBoard.Player.RemoveHealth(damageMultiplier);
+                redBoard.Player.RemoveHealth(damageMultiplier);
+            }
+
+            return res;
         }
 
         /// <summary>
@@ -59,7 +113,7 @@ namespace AFM_DLL.Helpers
                     board.RedSide.Player.Deck.Hero.ActiveElement
                 );
 
-                if (res.HeroFightResult == FightResult.WIN || new Random().Next(2) == 0)
+                if (res.HeroFightResult == FightResult.BLUE_WIN || new Random().Next(2) == 0)
                 {
                     if (res.HeroFightResult.Value == FightResult.DRAW)
                         res.BlueSideStartedOnDraw = true;

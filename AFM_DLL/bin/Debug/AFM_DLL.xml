@@ -75,13 +75,43 @@
                 Effectue la phase de tirage du plateau
             </summary>
             <returns>Un objet contenant des informations sur la </returns>
-            <exception cref="T:System.ApplicationException"></exception>
+            <exception cref="T:System.ApplicationException">
+                La méthode a été appelée alors que l'état du plateau ne le permet pas
+            </exception>
+        </member>
+        <member name="M:AFM_DLL.Models.BoardData.Board.SetSideReady(System.Boolean)">
+            <summary>
+                Indique qu'un côté du plateau a fini son tour
+            </summary>
+            <param name="isBlueSide">
+                Indique de quel côté du plateau l'opération a lieu
+            </param>
+            <returns>
+                Un booléen indiquant si les deux joueurs sont prêts et que les sorts peuvent être lancés
+            </returns>
+            <exception cref="T:System.ApplicationException">
+                La méthode a été appelée alors que l'état du plateau ne le permet pas
+            </exception>
         </member>
         <member name="M:AFM_DLL.Models.BoardData.Board.EvaluateSpells">
             <summary>
             Effectue l'évaluation des sortilèges en jeu
             </summary>
             <returns>Un objet comprenant toutes les informations résultat de l'évaluation des sortilèges</returns>
+            <exception cref="T:System.ApplicationException">
+                La méthode a été appelée alors que l'état du plateau ne le permet pas
+            </exception>
+        </member>
+        <member name="M:AFM_DLL.Models.BoardData.Board.EvaluateCardColumns">
+            <summary>
+                Évalue chaque colonne du plateau et indique les résultats de tous les combats.
+            </summary>
+            <returns>
+                Un dictionnaire de résultat de colonne, qui indique pour chaque colonne le déroulement du combat.
+            </returns>
+            <exception cref="T:System.ApplicationException">
+                La méthode a été appelée alors que l'état du plateau ne le permet pas
+            </exception>
         </member>
         <member name="T:AFM_DLL.Models.BoardData.BoardModifiers">
             <summary>
@@ -136,6 +166,11 @@
         <member name="P:AFM_DLL.Models.BoardData.BoardSide.AllElementsOfSide">
             <summary>
                 Raccourci qui donne toutes les cartes éléments de ce côté du plateau
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.BoardData.BoardSide.IsSideReady">
+            <summary>
+                Indique si le côté du plateau a fini de jouer
             </summary>
         </member>
         <member name="T:AFM_DLL.Models.BoardData.BoardState">
@@ -369,14 +404,14 @@
                 Indique le résultat d'un duel d'élément
             </summary>
         </member>
-        <member name="F:AFM_DLL.Models.Enum.FightResult.WIN">
+        <member name="F:AFM_DLL.Models.Enum.FightResult.BLUE_WIN">
             <summary>
-                Victoire
+                Victoire du joueur bleu
             </summary>
         </member>
-        <member name="F:AFM_DLL.Models.Enum.FightResult.LOSE">
+        <member name="F:AFM_DLL.Models.Enum.FightResult.RED_WIN">
             <summary>
-                Défaite
+                Victoire du joueur rouge
             </summary>
         </member>
         <member name="F:AFM_DLL.Models.Enum.FightResult.DRAW">
@@ -551,7 +586,10 @@
             <summary>
                 Initialise l'état d'un joueur
             </summary>
-            <param name="initialDeck"></param>
+            <param name="initialDeck">  
+                Le deck du joueur tel qu'initialisé au préalable. <br/>
+                Il peut être le deck choisi par le joueur ou bien le deck attribué au PNJ.
+            </param>
         </member>
         <member name="E:AFM_DLL.Models.PlayerInfo.PlayerGame.PlayerDied">
             <summary>
@@ -583,27 +621,27 @@
                 Défausse du joueur
             </summary>
         </member>
-        <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.AddMana(System.Int32)">
+        <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.AddMana(System.UInt32)">
             <summary>
                 Ajoute du mana au joueur
             </summary>
             <param name="mana">La quantité de mana à ajouter</param>
             <returns>Le nombre de mana réellement ajouté</returns>
         </member>
-        <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.RemoveMana(System.Int32)">
+        <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.RemoveMana(System.UInt32)">
             <summary>
                 Retire du mana au joueur
             </summary>
             <param name="mana">La quantité de mana à retirer</param>
             <returns>Si le joueur possède suffisamment de mana</returns>
         </member>
-        <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.AddHealth(System.Int32)">
+        <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.AddHealth(System.UInt32)">
             <summary>
                 Ajoute des points de vie au joueur
             </summary>
             <param name="health">La quantité de points de vie à ajouter</param>
         </member>
-        <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.RemoveHealth(System.Int32)">
+        <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.RemoveHealth(System.UInt32)">
             <summary>
                 Retire des points de vie au joueur
             </summary>
@@ -617,6 +655,24 @@
         <member name="M:AFM_DLL.Models.PlayerInfo.PlayerGame.Draw">
             <summary>
                 Donne jusqu'à 4 éléments au joueur ainsi qu'une carte sortilège (s'il en reste)
+            </summary>
+            <returns>
+                Un résultat de pioche qui contient des données sur les cartes piochées
+            </returns>
+        </member>
+        <member name="T:AFM_DLL.Models.UnityResults.ColumnFightResult">
+            <summary>
+                Représente les résultats d'un combat de cartes éléments sur une colonne.
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.UnityResults.ColumnFightResult.CardFightResult">
+            <summary>
+                Indique le résultat du combat de carte initial
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.UnityResults.ColumnFightResult.HeroFightResult">
+            <summary>
+                Le résultat du combat de Héros (null si pas d'égalité aux cartes)
             </summary>
         </member>
         <member name="T:AFM_DLL.Models.UnityResults.DrawingPhaseResult">
@@ -678,13 +734,29 @@
             <summary>
             Réalise un duel entre deux éléments et indique l'issue du combat par rapport à l'élément de base
             </summary>
-            <param name="element">
-                L'élément "joueur" pour lequel le résultat renvoyé sera appliqué.
+            <param name="blueCard">
+                L'élément bleu du duel.
             </param>
-            <param name="enemy">
-                L'élément "ennemi" auquel l'élément "joueur" sera comparé
+            <param name="redCard">
+                L'élément rouge du duel
             </param>
-            <returns></returns>
+            <returns>
+                Une enum indiquant l'issue du combat
+            </returns>
+        </member>
+        <member name="M:AFM_DLL.Helpers.FightHelper.EvaluateColumnFight(AFM_DLL.Models.BoardData.Board,AFM_DLL.Models.BoardData.BoardPosition)">
+            <summary>
+                Effectue les opérations d'un combat de colonne et inflige les dégâts corrects aux joueurs.
+            </summary>
+            <param name="board">
+                Le plateau de jeu à évaluer
+            </param>
+            <param name="column">
+                La colonne à évaluer
+            </param>
+            <returns>
+                Le résultat du combat pour la colonne
+            </returns>
         </member>
         <member name="M:AFM_DLL.Helpers.FightHelper.GetOrderedSpellCards(AFM_DLL.Models.BoardData.Board)">
             <summary>

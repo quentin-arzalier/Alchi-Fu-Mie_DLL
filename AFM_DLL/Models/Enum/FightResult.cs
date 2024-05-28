@@ -6,13 +6,13 @@
     public enum FightResult
     {
         /// <summary>
-        ///     Victoire
+        ///     Victoire du joueur bleu
         /// </summary>
-        WIN,
+        BLUE_WIN,
         /// <summary>
-        ///     Défaite
+        ///     Victoire du joueur rouge
         /// </summary>
-        LOSE,
+        RED_WIN,
         /// <summary>
         ///     Égalité
         /// </summary>

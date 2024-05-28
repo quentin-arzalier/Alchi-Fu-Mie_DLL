@@ -44,7 +44,7 @@ namespace AFM_DLL.Models.Cards
         /// <summary>
         ///     Le coût en mana du sort.
         /// </summary>
-        public abstract int GetManaCost();
+        public abstract uint GetManaCost();
         /// <summary>
         ///     La description du sort
         /// </summary>

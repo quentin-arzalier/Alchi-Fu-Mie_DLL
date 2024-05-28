@@ -1,5 +1,6 @@
 ﻿using AFM_DLL.Models.Cards;
 using AFM_DLL.Models.PlayerInfo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -35,5 +36,12 @@ namespace AFM_DLL.Models.BoardData
         ///     Raccourci qui donne toutes les cartes éléments de ce côté du plateau
         /// </summary>
         public List<ElementCard> AllElementsOfSide => ElementCards.Values.ToList();
+
+        /// <summary>
+        ///     Indique si le côté du plateau a fini de jouer
+        /// </summary>
+        public bool IsSideReady { get; internal set; }
+
+
     }
 }

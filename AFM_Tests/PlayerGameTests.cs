@@ -34,7 +34,7 @@ namespace AFM_Tests
         [TestCase(100, 120)]
         public void AddHealthTest(int toAdd, int expectedHealth)
         {
-            _player.AddHealth(toAdd);
+            _player.AddHealth((uint)toAdd);
             Assert.That(expectedHealth, Is.EqualTo(_player.HealthPoints));
         }
 
@@ -52,7 +52,7 @@ namespace AFM_Tests
         {
             var didPlayerDie = false;
             _player.PlayerDied += () => { didPlayerDie = true; };
-            _player.RemoveHealth(toRemove);
+            _player.RemoveHealth((uint)toRemove);
 
             Assert.Multiple(() =>
             {
@@ -77,7 +77,7 @@ namespace AFM_Tests
         [TestCase(20, 10, 14)]
         public void AddManaTest(int toAdd, int expectedMana, int expectedRemainingMana)
         {
-            var actuallyAddedMana = _player.AddMana(toAdd);
+            var actuallyAddedMana = _player.AddMana((uint)toAdd);
 
             Assert.Multiple(() =>
             {
@@ -93,7 +93,7 @@ namespace AFM_Tests
         [TestCase(5, 4, false)]
         public void RemoveManaTest(int toRemove, int expectedMana, bool expectedResult)
         {
-            var result = _player.RemoveMana(toRemove);
+            var result = _player.RemoveMana((uint)toRemove);
 
             Assert.Multiple(() =>
             {

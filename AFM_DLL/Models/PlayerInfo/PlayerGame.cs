@@ -15,7 +15,10 @@ namespace AFM_DLL.Models.PlayerInfo
         /// <summary>
         ///     Initialise l'état d'un joueur
         /// </summary>
-        /// <param name="initialDeck"></param>
+        /// <param name="initialDeck">  
+        ///     Le deck du joueur tel qu'initialisé au préalable. <br/>
+        ///     Il peut être le deck choisi par le joueur ou bien le deck attribué au PNJ.
+        /// </param>
         public PlayerGame(Deck initialDeck)
         {
             HealthPoints = 20;
@@ -61,12 +64,12 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </summary>
         /// <param name="mana">La quantité de mana à ajouter</param>
         /// <returns>Le nombre de mana réellement ajouté</returns>
-        public int AddMana(int mana)
+        public int AddMana(uint mana)
         {
             if (ManaPoints >= 10)
                 return 0;
 
-            var manaToAdd = Math.Min(10 - ManaPoints, mana);
+            var manaToAdd = Math.Min(10 - ManaPoints, (int)mana);
             ManaPoints += manaToAdd;
             return manaToAdd;
         }
@@ -76,11 +79,11 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </summary>
         /// <param name="mana">La quantité de mana à retirer</param>
         /// <returns>Si le joueur possède suffisamment de mana</returns>
-        public bool RemoveMana(int mana)
+        public bool RemoveMana(uint mana)
         {
             if (ManaPoints < mana)
                 return false;
-            ManaPoints -= mana;
+            ManaPoints -= (int)mana;
             return true;
         }
 
@@ -88,18 +91,18 @@ namespace AFM_DLL.Models.PlayerInfo
         ///     Ajoute des points de vie au joueur
         /// </summary>
         /// <param name="health">La quantité de points de vie à ajouter</param>
-        public void AddHealth(int health)
+        public void AddHealth(uint health)
         {
-            HealthPoints += health;
+            HealthPoints += (int)health;
         }
 
         /// <summary>
         ///     Retire des points de vie au joueur
         /// </summary>
         /// <param name="health">La quantité de points de vie à retirer</param>
-        public void RemoveHealth(int health)
+        public void RemoveHealth(uint health)
         {
-            HealthPoints -= health;
+            HealthPoints -= (int)health;
 
             if (HealthPoints <= 0)
                 PlayerDied.Invoke();
@@ -118,6 +121,9 @@ namespace AFM_DLL.Models.PlayerInfo
         /// <summary>
         ///     Donne jusqu'à 4 éléments au joueur ainsi qu'une carte sortilège (s'il en reste)
         /// </summary>
+        /// <returns>
+        ///     Un résultat de pioche qui contient des données sur les cartes piochées
+        /// </returns>
         public DrawResult Draw()
         {
             var res = new DrawResult();
