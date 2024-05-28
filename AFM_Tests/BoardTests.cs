@@ -300,6 +300,38 @@ namespace AFM_Tests
 
         #endregion
 
+        #region ResetBoard
+
+        [Test]
+        public void ResetBoardTest()
+        {
+            var board = TestBoards.GetFullBoardAfterEvaluation();
+            board.ResetBoard();
+            var bs = board.GetAllyBoardSide(true);
+            var rs = board.GetEnemyBoardSide(true);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(bs.IsSideReady, Is.False);
+                Assert.That(rs.IsSideReady, Is.False);
+                Assert.That(bs.Player.Defausse, Has.Count.EqualTo(1));
+                Assert.That(rs.Player.Defausse, Has.Count.EqualTo(1));
+                Assert.That(bs.Player.Hand.Elements, Has.Count.EqualTo(1));
+                Assert.That(rs.Player.Hand.Elements, Has.Count.EqualTo(1));
+                Assert.That(bs.Player.Deck.Elements, Has.Count.EqualTo(9));
+                Assert.That(rs.Player.Deck.Elements, Has.Count.EqualTo(9));
+                Assert.That(bs.Player.Deck.Elements.Any(e => e.OverrideElement != null), Is.False);
+                Assert.That(rs.Player.Deck.Elements.Any(e => e.OverrideElement != null), Is.False);
+                Assert.That(bs.Player.Hand.Spells, Is.Empty);
+                Assert.That(rs.Player.Hand.Spells, Is.Empty);
+
+                Assert.That(board.AllElementsOfBoard.Any(c => c != null), Is.False);
+                Assert.That(board.NextAction, Is.EqualTo(BoardState.DRAW_CARDS));
+
+            });
+        }
+
+        #endregion
 
     }
 }

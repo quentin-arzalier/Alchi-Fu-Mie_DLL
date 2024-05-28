@@ -28,6 +28,10 @@ namespace AFM_DLL.Models.Cards
         private Element InitialElement { get; set; }
 
 
+        /// <summary>
+        ///     Évènement indiquand quand une carte voit son type surchargé (ou désurchargé)
+        /// </summary>
+        public event Action<Element?> CardOverrideChanged;
 
         private Element? _override;
         /// <summary>
@@ -35,21 +39,17 @@ namespace AFM_DLL.Models.Cards
         /// </summary>
         public Element? OverrideElement
         {
-            private get
+            get
             {
                 return _override;
             }
             set
             {
                 _override = value;
-                CardOverrideChanged.Invoke(value);
+                CardOverrideChanged?.Invoke(value);
             }
         }
 
-        /// <summary>
-        ///     Évènement indiquand quand une carte voit son type surchargé (ou désurchargé)
-        /// </summary>
-        public event Action<Element?> CardOverrideChanged;
 
 
         /// <inheritdoc/>

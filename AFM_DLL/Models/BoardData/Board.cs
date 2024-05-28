@@ -122,7 +122,8 @@ namespace AFM_DLL.Models.BoardData
             var side = GetAllyBoardSide(isBlueSide);
             side.IsSideReady = true;
             side.Player.Deck.Hero.CanRevertOverride = false;
-            side.Player.Deck.Elements.Add(side.Player.Deck.Hero.OverrideCard);
+            if (side.Player.Deck.Hero.OverrideCard != null)
+                side.Player.Deck.Elements.Add(side.Player.Deck.Hero.OverrideCard);
 
             if (BlueSide.IsSideReady && RedSide.IsSideReady)
             {

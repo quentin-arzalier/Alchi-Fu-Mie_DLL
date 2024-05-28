@@ -275,14 +275,14 @@
                 Élément de base de la carte
             </summary>
         </member>
-        <member name="P:AFM_DLL.Models.Cards.ElementCard.OverrideElement">
-            <summary>
-                Surcharge d'élément de la carte (potentiellement dû à un sortilège)
-            </summary>
-        </member>
         <member name="E:AFM_DLL.Models.Cards.ElementCard.CardOverrideChanged">
             <summary>
                 Évènement indiquand quand une carte voit son type surchargé (ou désurchargé)
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.Cards.ElementCard.OverrideElement">
+            <summary>
+                Surcharge d'élément de la carte (potentiellement dû à un sortilège)
             </summary>
         </member>
         <member name="M:AFM_DLL.Models.Cards.ElementCard.AddToBoard(AFM_DLL.Models.BoardData.Board,System.Boolean,System.Nullable{AFM_DLL.Models.BoardData.BoardPosition})">

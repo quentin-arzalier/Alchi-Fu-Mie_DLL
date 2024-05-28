@@ -105,7 +105,7 @@ namespace AFM_DLL.Models.PlayerInfo
             HealthPoints -= (int)health;
 
             if (HealthPoints <= 0)
-                PlayerDied.Invoke();
+                PlayerDied?.Invoke();
         }
 
 
@@ -115,7 +115,7 @@ namespace AFM_DLL.Models.PlayerInfo
         public void GiveUp()
         {
             HealthPoints = 0;
-            PlayerDied.Invoke();
+            PlayerDied?.Invoke();
         }
 
         /// <summary>
