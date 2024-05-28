@@ -12,7 +12,7 @@ namespace AFM_Tests.TestData
 {
     public static class TestDecks
     {
-        private static Deck GetElementDeck(Element elt)
+        public static Deck GetElementDeck(Element elt)
         {
             var deck = new Deck()
             {

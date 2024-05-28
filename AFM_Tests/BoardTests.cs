@@ -19,7 +19,7 @@ namespace AFM_Tests
         [Test]
         public void BoardDrawTest()
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
             var bs = board.GetAllyBoardSide(true);
             var rs = board.GetEnemyBoardSide(true);
             var res = board.DrawCards();
@@ -51,7 +51,7 @@ namespace AFM_Tests
         [TestCase(BoardPosition.RIGHT, false)]
         public void AddElementCardTest(BoardPosition position, bool isBlueSide)
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
             board.DrawCards();
 
 
@@ -72,7 +72,7 @@ namespace AFM_Tests
         [Test]
         public void AddAllElementCards()
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
             var drawres = board.DrawCards();
 
             var bs = board.GetAllyBoardSide(true);
@@ -101,7 +101,7 @@ namespace AFM_Tests
         [TestCase(BoardPosition.RIGHT, false)]
         public void RemoveElementCardTest(BoardPosition position, bool isBlueSide)
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
             board.DrawCards();
             var side = board.GetAllyBoardSide(isBlueSide);
 
@@ -131,7 +131,7 @@ namespace AFM_Tests
         [TestCase(true)]
         public void AddSpellCardSuccessTest(bool isBlueSide)
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
             board.DrawCards();
             var side = board.GetAllyBoardSide(isBlueSide);
             side.Player.AddMana(10);
@@ -153,7 +153,7 @@ namespace AFM_Tests
         [TestCase(true)]
         public void AddSpellCardFailTest(bool isBlueSide)
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
             board.DrawCards();
             var side = board.GetAllyBoardSide(isBlueSide);
             side.Player.RemoveMana((uint)side.Player.ManaPoints);
@@ -176,7 +176,7 @@ namespace AFM_Tests
         [TestCase(true)]
         public void RemoveSpellCardTest(bool isBlueSide)
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
             board.DrawCards();
             var side = board.GetAllyBoardSide(isBlueSide);
             side.Player.AddMana(10);
@@ -215,7 +215,7 @@ namespace AFM_Tests
         [TestCase(true, true, true, 2)]
         public void EvaluateSpellsTest(bool blueSidePrio, bool blueSidePlays, bool redSidePlays, int expectedNbSpellsPlayed)
         {
-            var board = blueSidePrio ? TestBoards.GetBluePlayerPrioBoard() : TestBoards.GetRedPlayerPrioBoard();
+            var board = blueSidePrio ? TestBoards.GetBluePlayerPrioBoardInDrawPhase() : TestBoards.GetRedPlayerPrioBoardInDrawPhase();
             board.DrawCards();
             var bs = board.GetAllyBoardSide(true);
             var rs = board.GetEnemyBoardSide(true);
@@ -305,7 +305,7 @@ namespace AFM_Tests
         [Test]
         public void ResetBoardTest()
         {
-            var board = TestBoards.GetFullBoardAfterEvaluation();
+            var board = TestBoards.GetFullBoardInResetPhase();
             board.ResetBoard();
             var bs = board.GetAllyBoardSide(true);
             var rs = board.GetEnemyBoardSide(true);
@@ -341,7 +341,7 @@ namespace AFM_Tests
         [TestCase(10)]
         public void SkipTurns(int turnstoSkip)
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
 
             for (int i = 0; i < turnstoSkip; i++)
             {
@@ -357,7 +357,7 @@ namespace AFM_Tests
         [Test]
         public void PlayAllCardsUntilDeath()
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
 
             var noDeath = true;
             void death() { noDeath = false; }
@@ -390,7 +390,7 @@ namespace AFM_Tests
         [Test]
         public void PlayAllCardsWithSpellsUntilDeath()
         {
-            var board = TestBoards.GetBluePlayerPrioBoard();
+            var board = TestBoards.GetBluePlayerPrioBoardInDrawPhase();
 
             var noDeath = true;
             void death() { noDeath = false; }

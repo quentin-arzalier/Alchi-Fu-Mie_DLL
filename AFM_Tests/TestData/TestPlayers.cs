@@ -1,4 +1,5 @@
-﻿using AFM_DLL.Models.PlayerInfo;
+﻿using AFM_DLL;
+using AFM_DLL.Models.PlayerInfo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,28 +10,10 @@ namespace AFM_Tests.TestData
 {
     public static class TestPlayers
     {
-        public static PlayerGame GetHealthyRockPlayer() => new(TestDecks.GetRockDeck());
-        public static PlayerGame GetHealthyPaperPlayer() => new(TestDecks.GetPaperDeck());
-        public static PlayerGame GetHealthyScissorsPlayer() => new(TestDecks.GetScissorsDeck());
-
-        public static PlayerGame GetLowRockPlayer()
-        {
-            var p = GetHealthyRockPlayer();
-            p.RemoveHealth(9);
-            return p;
-        }
-        public static PlayerGame GetLowPaperPlayer()
-        {
-            var p = GetHealthyPaperPlayer();
-            p.RemoveHealth(9);
-            return p;
-        }
-        public static PlayerGame GetLowScissorsPlayer()
-        {
-            var p = GetHealthyScissorsPlayer();
-            p.RemoveHealth(9);
-            return p;
-        }
+        public static PlayerGame GetRockPlayer() => new(TestDecks.GetRockDeck());
+        public static PlayerGame GetPaperPlayer() => new(TestDecks.GetPaperDeck());
+        public static PlayerGame GetScissorsPlayer() => new(TestDecks.GetScissorsDeck());
+        public static PlayerGame GetElementPlayer(Element elt) => new(TestDecks.GetElementDeck(elt));
 
     }
 }
