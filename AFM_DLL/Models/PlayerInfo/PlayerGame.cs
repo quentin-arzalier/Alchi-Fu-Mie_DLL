@@ -21,7 +21,7 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </param>
         public PlayerGame(Deck initialDeck)
         {
-            HealthPoints = 20;
+            HealthPoints = 10;
             ManaPoints = 0;
             Deck = initialDeck;
             Hand = new Hand();
