@@ -26,10 +26,14 @@ namespace AFM_Tests
             Assert.Multiple(() =>
             {
                 Assert.That(board.NextAction, Is.EqualTo(BoardState.PLAY_CARDS));
-                Assert.That(bs.Player?.Hand.Elements.Count, Is.EqualTo(4));
-                Assert.That(rs.Player?.Hand.Elements.Count, Is.EqualTo(4));
-                Assert.That(bs.Player?.Hand.Spells.Count, Is.EqualTo(1));
-                Assert.That(rs.Player?.Hand.Spells.Count, Is.EqualTo(1));
+                Assert.That(bs.Player.Hand.Elements.Count, Is.EqualTo(4));
+                Assert.That(rs.Player.Hand.Elements.Count, Is.EqualTo(4));
+                Assert.That(res.BlueSideDrawResult.DrawnElements, Is.EquivalentTo(bs.Player.Hand.Elements));
+                Assert.That(res.RedSideDrawResult.DrawnElements, Is.EquivalentTo(rs.Player.Hand.Elements));
+                Assert.That(bs.Player.Hand.Spells.Count, Is.EqualTo(1));
+                Assert.That(rs.Player.Hand.Spells.Count, Is.EqualTo(1));
+                Assert.That(bs.Player.Hand.Spells.First(), Is.EqualTo(res.BlueSideDrawResult.DrawnSpell));
+                Assert.That(rs.Player.Hand.Spells.First(), Is.EqualTo(res.RedSideDrawResult.DrawnSpell));
                 Assert.That(rs.ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
                 Assert.That(bs.ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
                 Assert.That(rs.SpellCard, Is.EqualTo(null));
@@ -62,6 +66,30 @@ namespace AFM_Tests
                 Assert.That(side.ElementCards[position], Is.EqualTo(card));
                 Assert.That(side.Player.Hand.Elements, Is.Not.Contains(card));
                 Assert.That(success);
+            });
+        }
+
+        [Test]
+        public void AddAllElementCards()
+        {
+            var board = TestBoards.GetBluePlayerPrioBoard();
+            var drawres = board.DrawCards();
+
+            var bs = board.GetAllyBoardSide(true);
+            var rs = board.GetEnemyBoardSide(true);
+
+            foreach(var position in Enum.GetValues<BoardPosition>())
+            {
+                bs.Player.Hand.Elements[0].AddToBoard(board, true, position);
+                rs.Player.Hand.Elements[0].AddToBoard(board, false, position);
+            }
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(bs.Player.Hand.Elements, Has.Count.EqualTo(1));
+                Assert.That(rs.Player.Hand.Elements, Has.Count.EqualTo(1));
+                Assert.That(bs.ElementCards.Values.Any(c => c == null), Is.False);
+                Assert.That(rs.ElementCards.Values.Any(c => c == null), Is.False);
             });
         }
 
