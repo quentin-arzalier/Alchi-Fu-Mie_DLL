@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AFM_DLL.Models.Cards;
+using System;
 
 namespace AFM_DLL.Models.PlayerInfo
 {
@@ -27,30 +28,19 @@ namespace AFM_DLL.Models.PlayerInfo
         /// <summary>
         ///     Élément actif du héros (prend en compte les surcharges par remplacement)
         /// </summary>
-        public Element ActiveElement => OverrideElement ?? InitialElement;
+        public Element ActiveElement => OverrideCard?.ActiveElement ?? InitialElement;
 
         /// <summary>
         ///     Élément de base du héros
         /// </summary>
         private Element InitialElement { get; set; }
 
-        private Element? _override;
-
         /// <summary>
         ///     Surcharge d'élément du héros (potentiellement dû à un remplacement)
         /// </summary>
-        public Element? OverrideElement
-        {
-            private get
-            {
-                return _override;
-            }
-            set
-            {
-                _override = value;
-                HeroOverrideChanged.Invoke(value);
-            }
-        }
+        public ElementCard OverrideCard { get; internal set; }
+
+        internal bool CanRevertOverride { get; set; }
 
         /// <summary>
         ///     Évènement indiquand quand un héros voit son type surchargé (ou désurchargé)

@@ -140,5 +140,39 @@ namespace AFM_DLL.Models.PlayerInfo
             }
             return res;
         }
+
+        internal bool ReplaceHeroType(ElementCard card)
+        {
+            if (card == null || Hand.Elements.Contains(card))
+                return false;
+
+            if (Deck.Hero.OverrideCard != null && Deck.Hero.CanRevertOverride)
+            {
+                Hand.Elements.Add(Deck.Hero.OverrideCard);
+                Deck.Hero.OverrideCard = null;
+                AddMana(2);
+            }
+
+            if (!RemoveMana(2))
+                return false;
+
+            Hand.Elements.Remove(card);
+            Deck.Hero.OverrideCard = card;
+            Deck.Hero.CanRevertOverride = true;
+
+            return true;
+        }
+
+        internal bool CancelHeroTypeReplacement()
+        {
+            if (Deck.Hero.OverrideCard != null && Deck.Hero.CanRevertOverride)
+            {
+                Hand.Elements.Add(Deck.Hero.OverrideCard);
+                Deck.Hero.OverrideCard = null;
+                AddMana(2);
+                return true;
+            }
+            return false;
+        }
     }
 }

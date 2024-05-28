@@ -600,7 +600,7 @@
                 Élément de base du héros
             </summary>
         </member>
-        <member name="P:AFM_DLL.Models.PlayerInfo.Hero.OverrideElement">
+        <member name="P:AFM_DLL.Models.PlayerInfo.Hero.OverrideCard">
             <summary>
                 Surcharge d'élément du héros (potentiellement dû à un remplacement)
             </summary>

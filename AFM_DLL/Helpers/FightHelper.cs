@@ -1,9 +1,7 @@
 ﻿using AFM_DLL.Models.BoardData;
-using AFM_DLL.Models.Cards;
 using AFM_DLL.Models.Enum;
 using AFM_DLL.Models.UnityResults;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AFM_DLL.Helpers
@@ -113,7 +111,7 @@ namespace AFM_DLL.Helpers
                     board.RedSide.Player.Deck.Hero.ActiveElement
                 );
 
-                if (res.HeroFightResult == FightResult.BLUE_WIN || ( res.HeroFightResult == FightResult.DRAW && new Random().Next(2) == 0))
+                if (res.HeroFightResult == FightResult.BLUE_WIN || (res.HeroFightResult == FightResult.DRAW && new Random().Next(2) == 0))
                 {
                     if (res.HeroFightResult.Value == FightResult.DRAW)
                         res.BlueSideStartedOnDraw = true;

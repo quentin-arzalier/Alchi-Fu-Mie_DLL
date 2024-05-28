@@ -1,13 +1,9 @@
 ﻿using AFM_DLL.Models.Cards;
 using AFM_DLL.Models.Enum;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_DLL.Models.UnityResults
-{ 
+{
     /// <summary>
     ///     Contient les informations liées à la phase de jeu des cartes sortilèges
     /// </summary>

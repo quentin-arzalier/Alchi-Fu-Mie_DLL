@@ -119,8 +119,10 @@ namespace AFM_DLL.Models.BoardData
         {
             if (NextAction != BoardState.PLAY_CARDS)
                 throw new ApplicationException($"La fonction SetSideReady ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
-
-            GetAllyBoardSide(isBlueSide).IsSideReady = true;
+            var side = GetAllyBoardSide(isBlueSide);
+            side.IsSideReady = true;
+            side.Player.Deck.Hero.CanRevertOverride = false;
+            side.Player.Deck.Elements.Add(side.Player.Deck.Hero.OverrideCard);
 
             if (BlueSide.IsSideReady && RedSide.IsSideReady)
             {
@@ -146,7 +148,8 @@ namespace AFM_DLL.Models.BoardData
             NextAction = BoardState.EVALUATE_ELEMENTS;
 
             var res = FightHelper.GetOrderedSpellCards(this);
-            foreach (var card in res.SpellsInOrder) {
+            foreach (var card in res.SpellsInOrder)
+            {
                 card.card.ActivateSpell(this, card.isBlueSide);
             }
             return res;

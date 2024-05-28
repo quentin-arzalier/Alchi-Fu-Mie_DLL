@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AFM_DLL.Models.BoardData
+﻿namespace AFM_DLL.Models.BoardData
 {
     /// <summary>
     ///     Représente l'état du plateau
