@@ -22,32 +22,32 @@ namespace AFM_Tests
 
         #region Health
 
-        [TestCase(1, 21)]
-        [TestCase(2, 22)]
-        [TestCase(3, 23)]
-        [TestCase(4, 24)]
-        [TestCase(5, 25)]
-        [TestCase(10, 30)]
-        [TestCase(20, 40)]
-        [TestCase(25, 45)]
-        [TestCase(50, 70)]
-        [TestCase(100, 120)]
+        [TestCase(1, 11)]
+        [TestCase(2, 12)]
+        [TestCase(3, 13)]
+        [TestCase(4, 14)]
+        [TestCase(5, 15)]
+        [TestCase(10, 20)]
+        [TestCase(20, 30)]
+        [TestCase(25, 35)]
+        [TestCase(50, 60)]
+        [TestCase(100, 110)]
         public void AddHealthTest(int toAdd, int expectedHealth)
         {
             _player.AddHealth((uint)toAdd);
             Assert.That(expectedHealth, Is.EqualTo(_player.HealthPoints));
         }
 
-        [TestCase(1, 19, false)]
-        [TestCase(2, 18, false)]
-        [TestCase(3, 17, false)]
-        [TestCase(4, 16, false)]
-        [TestCase(5, 15, false)]
-        [TestCase(10, 10, false)]
-        [TestCase(15, 5, false)]
-        [TestCase(20, 0, true)]
-        [TestCase(25, -5, true)]
-        [TestCase(50, -30, true)]
+        [TestCase(1, 9, false)]
+        [TestCase(2, 8, false)]
+        [TestCase(3, 7, false)]
+        [TestCase(4, 6, false)]
+        [TestCase(5, 5, false)]
+        [TestCase(10, 0, true)]
+        [TestCase(15, -5, true)]
+        [TestCase(20, -10, true)]
+        [TestCase(25, -15, true)]
+        [TestCase(50, -40, true)]
         public void RemoveHealthTest(int toRemove, int expectedHealth, bool playerDied)
         {
             var didPlayerDie = false;

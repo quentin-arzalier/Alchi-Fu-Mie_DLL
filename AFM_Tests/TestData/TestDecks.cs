@@ -12,95 +12,33 @@ namespace AFM_Tests.TestData
 {
     public static class TestDecks
     {
-        public static Deck GetRockDeck()
+        private static Deck GetElementDeck(Element elt)
         {
-            var rockDeck = new Deck()
+            var deck = new Deck()
             {
-                Hero = new Hero("RockMan", Element.ROCK)
+                Hero = new Hero(elt.ToString().ToLower() + "man", elt)
             };
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-            rockDeck.Elements.Add(new ElementCard(Element.ROCK));
-
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            rockDeck.Spells.Add(SpellCard.FromType(SpellType.DOUBLE_DAMAGE));
-
-            return rockDeck;
-        }
-        public static Deck GetPaperDeck()
-        {
-            var paperDeck = new Deck()
+            for (int i = 0; i < 10; i++)
             {
-                Hero = new Hero("PaperMan", Element.PAPER)
-            };
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
-            paperDeck.Elements.Add(new ElementCard(Element.PAPER));
+                deck.Elements.Add(new ElementCard(elt));
+            }
 
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            paperDeck.Spells.Add(SpellCard.FromType(SpellType.DOUBLE_DAMAGE));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
+            deck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
+            deck.Spells.Add(SpellCard.FromType(SpellType.DOUBLE_DAMAGE));
 
-            return paperDeck;
+            return deck;
         }
-        public static Deck GetScissorsDeck()
-        {
-            var scissorsDeck = new Deck()
-            {
-                Hero = new Hero("ScissorsMan", Element.SCISSORS)
-            };
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
-            scissorsDeck.Elements.Add(new ElementCard(Element.SCISSORS));
 
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_ROCK));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_SCISSORS));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.ADD_MANA_FROM_PAPER));
-            scissorsDeck.Spells.Add(SpellCard.FromType(SpellType.DOUBLE_DAMAGE));
-
-            return scissorsDeck;
-        }
+        public static Deck GetRockDeck() => GetElementDeck(Element.ROCK);
+        public static Deck GetPaperDeck() => GetElementDeck(Element.PAPER);
+        public static Deck GetScissorsDeck() => GetElementDeck(Element.SCISSORS);
     }
 }

@@ -113,7 +113,7 @@ namespace AFM_DLL.Helpers
                     board.RedSide.Player.Deck.Hero.ActiveElement
                 );
 
-                if (res.HeroFightResult == FightResult.BLUE_WIN || new Random().Next(2) == 0)
+                if (res.HeroFightResult == FightResult.BLUE_WIN || ( res.HeroFightResult == FightResult.DRAW && new Random().Next(2) == 0))
                 {
                     if (res.HeroFightResult.Value == FightResult.DRAW)
                         res.BlueSideStartedOnDraw = true;

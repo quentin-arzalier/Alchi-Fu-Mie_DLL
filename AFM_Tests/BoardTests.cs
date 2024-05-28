@@ -9,43 +9,35 @@ using System.Text;
 using System.Threading.Tasks;
 using AFM_DLL.Models.Cards;
 using System.Drawing;
+using AFM_DLL.Models.Enum;
 
 namespace AFM_Tests
 {
     public class BoardTests
     {
-        private Board _board;
-
-        [SetUp]
-        public void Setup()
-        {
-            _board = new Board(new PlayerGame(TestDecks.GetRockDeck()), new PlayerGame(TestDecks.GetPaperDeck()));
-
-            _board.GetAllyBoardSide(true).Player.Draw();
-            _board.GetAllyBoardSide(true).Player.AddMana(10);
-
-            _board.GetEnemyBoardSide(true).Player.Draw();
-            _board.GetEnemyBoardSide(true).Player.AddMana(10);
-        }
 
         [Test]
-        public void BoardSetupTest()
+        public void BoardDrawTest()
         {
+            var board = TestBoards.GetBluePlayerPrioBoard();
+            var bs = board.GetAllyBoardSide(true);
+            var rs = board.GetEnemyBoardSide(true);
+            var res = board.DrawCards();
             Assert.Multiple(() =>
             {
-                Assert.That(_board.GetAllyBoardSide(true).Player?.Hand.Elements.Count, Is.EqualTo(4));
-                Assert.That(_board.GetEnemyBoardSide(true).Player?.Hand.Elements.Count, Is.EqualTo(4));
-                Assert.That(_board.GetAllyBoardSide(true).Player?.Hand.Spells.Count, Is.EqualTo(1));
-                Assert.That(_board.GetEnemyBoardSide(true).Player?.Hand.Spells.Count, Is.EqualTo(1));
-
-                Assert.That(_board.GetEnemyBoardSide(true).ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
-                Assert.That(_board.GetAllyBoardSide(true).ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
-
-                Assert.That(_board.GetEnemyBoardSide(true).SpellCard, Is.EqualTo(null));
-                Assert.That(_board.GetAllyBoardSide(true).SpellCard, Is.EqualTo(null));
+                Assert.That(board.NextAction, Is.EqualTo(BoardState.PLAY_CARDS));
+                Assert.That(bs.Player?.Hand.Elements.Count, Is.EqualTo(4));
+                Assert.That(rs.Player?.Hand.Elements.Count, Is.EqualTo(4));
+                Assert.That(bs.Player?.Hand.Spells.Count, Is.EqualTo(1));
+                Assert.That(rs.Player?.Hand.Spells.Count, Is.EqualTo(1));
+                Assert.That(rs.ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
+                Assert.That(bs.ElementCards.Values.Count(v => v == null), Is.EqualTo(3));
+                Assert.That(rs.SpellCard, Is.EqualTo(null));
+                Assert.That(bs.SpellCard, Is.EqualTo(null));
             });
         }
 
+        #region Play Elements
 
         [TestCase(BoardPosition.LEFT, true)]
         [TestCase(BoardPosition.LEFT, false)]
@@ -55,11 +47,15 @@ namespace AFM_Tests
         [TestCase(BoardPosition.RIGHT, false)]
         public void AddElementCardTest(BoardPosition position, bool isBlueSide)
         {
-            var side = _board.GetAllyBoardSide(isBlueSide);
+            var board = TestBoards.GetBluePlayerPrioBoard();
+            board.DrawCards();
+
+
+            var side = board.GetAllyBoardSide(isBlueSide);
 
             var card = side.Player.Hand.Elements[0];
 
-            var success = card.AddToBoard(_board, isBlueSide, position);
+            var success = card.AddToBoard(board, isBlueSide, position);
 
             Assert.Multiple(() =>
             {
@@ -69,15 +65,52 @@ namespace AFM_Tests
             });
         }
 
+        [TestCase(BoardPosition.LEFT, true)]
+        [TestCase(BoardPosition.LEFT, false)]
+        [TestCase(BoardPosition.MIDDLE, true)]
+        [TestCase(BoardPosition.MIDDLE, false)]
+        [TestCase(BoardPosition.RIGHT, true)]
+        [TestCase(BoardPosition.RIGHT, false)]
+        public void RemoveElementCardTest(BoardPosition position, bool isBlueSide)
+        {
+            var board = TestBoards.GetBluePlayerPrioBoard();
+            board.DrawCards();
+            var side = board.GetAllyBoardSide(isBlueSide);
+
+            var card = side.Player.Hand.Elements[0];
+
+            var addSuccess = card.AddToBoard(board, isBlueSide, position);
+
+            Assume.That(side.ElementCards[position], Is.EqualTo(card));
+            Assume.That(side.Player.Hand.Elements, Is.Not.Contains(card));
+            Assume.That(addSuccess);
+
+            var removeSuccess = card.RemoveFromBoard(board, isBlueSide, position);
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(side.ElementCards[position] == null);
+                Assert.That(side.Player.Hand.Elements, Does.Contain(card));
+                Assert.That(removeSuccess);
+            });
+        }
+
+        #endregion Play Elements    
+
+        #region Play Spells
+
         [TestCase(false)]
         [TestCase(true)]
-        public void AddSpellCardTest(bool isBlueSide)
+        public void AddSpellCardSuccessTest(bool isBlueSide)
         {
-            var side = _board.GetAllyBoardSide(isBlueSide);
+            var board = TestBoards.GetBluePlayerPrioBoard();
+            board.DrawCards();
+            var side = board.GetAllyBoardSide(isBlueSide);
+            side.Player.AddMana(10);
 
             var card = side.Player.Hand.Spells[0];
 
-            var success = card.AddToBoard(_board, isBlueSide, null);
+            var success = card.AddToBoard(board, isBlueSide, null);
 
             Assert.Multiple(() =>
             {
@@ -88,52 +121,47 @@ namespace AFM_Tests
             });
         }
 
-
-        [TestCase(BoardPosition.LEFT, true)]
-        [TestCase(BoardPosition.LEFT, false)]
-        [TestCase(BoardPosition.MIDDLE, true)]
-        [TestCase(BoardPosition.MIDDLE, false)]
-        [TestCase(BoardPosition.RIGHT, true)]
-        [TestCase(BoardPosition.RIGHT, false)]
-        public void RemoveElementCardTest(BoardPosition position, bool isBlueSide)
+        [TestCase(false)]
+        [TestCase(true)]
+        public void AddSpellCardFailTest(bool isBlueSide)
         {
-            var side = _board.GetAllyBoardSide(isBlueSide);
+            var board = TestBoards.GetBluePlayerPrioBoard();
+            board.DrawCards();
+            var side = board.GetAllyBoardSide(isBlueSide);
+            side.Player.RemoveMana((uint)side.Player.ManaPoints);
 
-            var card = side.Player.Hand.Elements[0];
+            var card = side.Player.Hand.Spells[0];
+            side.Player.AddMana(card.GetManaCost() - 1);
 
-            var addSuccess = card.AddToBoard(_board, isBlueSide, position);
-
-            Assume.That(side.ElementCards[position], Is.EqualTo(card));
-            Assume.That(side.Player.Hand.Elements, Is.Not.Contains(card));
-            Assume.That(addSuccess);
-
-            var removeSuccess = card.RemoveFromBoard(_board, isBlueSide, position);
+            var success = card.AddToBoard(board, isBlueSide, null);
 
             Assert.Multiple(() =>
             {
-                Assert.That(side.ElementCards[position] == null);
-                Assert.That(side.Player.Hand.Elements, Does.Contain(card));
-                Assert.That(removeSuccess);
+                Assert.That(side.SpellCard, Is.Null);
+                Assert.That(side.Player.Hand.Spells, Does.Contain(card));
+                Assert.That(!success);
+                Assert.That(side.Player.ManaPoints, Is.EqualTo(card.GetManaCost() - 1));
             });
         }
-
 
         [TestCase(false)]
         [TestCase(true)]
         public void RemoveSpellCardTest(bool isBlueSide)
         {
-            var side = _board.GetAllyBoardSide(isBlueSide);
-
+            var board = TestBoards.GetBluePlayerPrioBoard();
+            board.DrawCards();
+            var side = board.GetAllyBoardSide(isBlueSide);
+            side.Player.AddMana(10);
             var card = side.Player.Hand.Spells[0];
 
-            var addSuccess = card.AddToBoard(_board, isBlueSide, null);
+            var addSuccess = card.AddToBoard(board, isBlueSide, null);
 
             Assume.That(side.SpellCard, Is.EqualTo(card));
             Assume.That(side.Player.Hand.Spells, Is.Not.Contains(card));
             Assume.That(addSuccess);
             Assume.That(side.Player.ManaPoints, Is.EqualTo(10 - card.GetManaCost()));
 
-            var removeSuccess = card.RemoveFromBoard(_board, isBlueSide, null);
+            var removeSuccess = card.RemoveFromBoard(board, isBlueSide, null);
 
 
             Assert.Multiple(() =>
@@ -144,5 +172,106 @@ namespace AFM_Tests
                 Assert.That(side.Player.ManaPoints, Is.EqualTo(10));
             });
         }
+
+        #endregion Play Spells
+
+        #region Evaluate Spells 
+
+        [TestCase(false, false, false, 0)]
+        [TestCase(false, false, true, 1)]
+        [TestCase(false, true, false, 1)]
+        [TestCase(false, true, true, 2)]
+        [TestCase(true, false, false, 0)]
+        [TestCase(true, false, true, 1)]
+        [TestCase(true, true, false, 1)]
+        [TestCase(true, true, true, 2)]
+        public void EvaluateSpellsTest(bool blueSidePrio, bool blueSidePlays, bool redSidePlays, int expectedNbSpellsPlayed)
+        {
+            var board = blueSidePrio ? TestBoards.GetBluePlayerPrioBoard() : TestBoards.GetRedPlayerPrioBoard();
+            board.DrawCards();
+            var bs = board.GetAllyBoardSide(true);
+            var rs = board.GetEnemyBoardSide(true);
+            bs.Player.AddMana(10);
+            rs.Player.AddMana(10);
+
+            SpellCard? bc = null;
+            SpellCard? rc = null;
+            
+            if (blueSidePlays)
+            {
+                bc = bs.Player.Hand.Spells[0];
+                bc.AddToBoard(board, true, null);
+            }
+            board.SetSideReady(isBlueSide: true);
+
+            if (redSidePlays)
+            {
+                rc = rs.Player.Hand.Spells[0];
+                rc.AddToBoard(board, false, null);
+            }
+            board.SetSideReady(isBlueSide: false);
+
+            Assume.That(board.NextAction, Is.EqualTo(BoardState.EVALUATE_SPELLS));
+
+            var spellsResult = board.EvaluateSpells();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(spellsResult.SpellsInOrder, Has.Count.EqualTo(expectedNbSpellsPlayed));
+                Assert.That(spellsResult.BlueSideStartedOnDraw, Is.Null);
+                if (blueSidePlays)
+                {
+                    if (blueSidePrio)
+                    {
+                        Assert.That(spellsResult.SpellsInOrder.First().isBlueSide, Is.True);
+                        Assert.That(spellsResult.SpellsInOrder.First().card, Is.EqualTo(bc));
+                        if (redSidePlays)
+                            Assert.That(spellsResult.HeroFightResult, Is.EqualTo(FightResult.BLUE_WIN));
+                        else
+                            Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                    }
+                    else
+                    {
+                        Assert.That(spellsResult.SpellsInOrder.Last().isBlueSide, Is.True);
+                        Assert.That(spellsResult.SpellsInOrder.Last().card, Is.EqualTo(bc));
+                        if (redSidePlays)
+                            Assert.That(spellsResult.HeroFightResult, Is.EqualTo(FightResult.RED_WIN));
+                        else
+                            Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                    }
+                }
+                if (redSidePlays)
+                {
+                    if (!blueSidePrio)
+                    {
+                        Assert.That(spellsResult.SpellsInOrder.First().isBlueSide, Is.False);
+                        Assert.That(spellsResult.SpellsInOrder.First().card, Is.EqualTo(rc));
+                        if (blueSidePlays)
+                            Assert.That(spellsResult.HeroFightResult, Is.EqualTo(FightResult.RED_WIN));
+                        else
+                            Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                    }
+                    else
+                    {
+                        Assert.That(spellsResult.SpellsInOrder.Last().isBlueSide, Is.False);
+                        Assert.That(spellsResult.SpellsInOrder.Last().card, Is.EqualTo(rc));
+                        if (blueSidePlays)
+                            Assert.That(spellsResult.HeroFightResult, Is.EqualTo(FightResult.BLUE_WIN));
+                        else
+                            Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                    }
+                }
+                if (!blueSidePlays && !redSidePlays)
+                    Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+            });
+
+
+        }
+
+
+
+        #endregion
+
+
     }
 }
