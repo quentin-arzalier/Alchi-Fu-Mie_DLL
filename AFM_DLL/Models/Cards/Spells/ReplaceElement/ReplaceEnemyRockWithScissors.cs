@@ -13,7 +13,7 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         public override void ActivateSpell(Board board, bool isBlueSide)
         {
             var enemyrocks = board.GetEnemyBoardSide(isBlueSide).AllElementsOfSide
-                .Where(c => c.ActiveElement == Element.ROCK);
+                .Where(c => c?.ActiveElement == Element.ROCK);
 
             foreach (var rock in enemyrocks)
             {

@@ -12,7 +12,7 @@ namespace AFM_DLL.Models.Cards.Spells
         /// <inheritdoc/>
         public override void ActivateSpell(Board board, bool isBlueSide)
         {
-            var count = board.AllElementsOfBoard.Count(c => c.ActiveElement == Element.PAPER);
+            var count = board.AllElementsOfBoard.Count(c => c?.ActiveElement == Element.PAPER);
             board.GetAllyBoardSide(isBlueSide).Player.AddMana((uint)count);
         }
 
