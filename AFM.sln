@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFM_DLL", "AFM_DLL\AFM_DLL.csproj", "{2209E05E-9CA4-4A72-87DB-CC52697F83FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AFM_Tests", "AFM_Tests\AFM_Tests.csproj", "{0E23F117-96BD-4DDE-9026-9CB4E853FA05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AFM_Tests", "AFM_Tests\AFM_Tests.csproj", "{0E23F117-96BD-4DDE-9026-9CB4E853FA05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
