@@ -52,10 +52,12 @@ namespace AFM_DLL.Models.PlayerInfo
         ///     Cartes du joueur
         /// </summary>
         public Deck Deck { get; private set; }
+
+
         /// <summary>
         ///     Défausse du joueur
         /// </summary>
-        public List<Card> Defausse { get; private set; }
+        public List<SpellCard> Defausse { get; private set; }
 
 
 

@@ -41,10 +41,5 @@ namespace AFM_DLL.Models.PlayerInfo
         public ElementCard OverrideCard { get; internal set; }
 
         internal bool CanRevertOverride { get; set; }
-
-        /// <summary>
-        ///     Évènement indiquant quand un héros voit son type surchargé (ou désurchargé)
-        /// </summary>
-        public event Action<Element?> HeroOverrideChanged;
     }
 }

@@ -50,11 +50,6 @@ namespace AFM_DLL.Models.Cards
             }
         }
 
-        /// <summary>
-        ///     Évènement indiquand quand une carte voit son type surchargé (ou désurchargé)
-        /// </summary>
-        public event Action<Element?> CardOverrideChanged;
-
 
         /// <inheritdoc/>
         public override bool AddToBoard(Board board, bool isBlueSide, BoardPosition? position)
