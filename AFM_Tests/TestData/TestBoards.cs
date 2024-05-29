@@ -26,7 +26,7 @@ namespace AFM_Tests.TestData
 
         public static Board GetBoardFullOfElementInPlayPhase(Element elt)
         {
-            var board = new Board(TestPlayers.GetElementPlayer(elt), TestPlayers.GetElementPlayer(elt));
+            var board = new Board(TestPlayers.FromElement(elt), TestPlayers.FromElement(elt));
             FillBoardWithCardsFromDrawPhase(board);
 
             return board;

@@ -30,7 +30,7 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         /// <inheritdoc/>
         public override uint GetManaCost()
         {
-            return 4;
+            return 3;
         }
 
         /// <inheritdoc/>

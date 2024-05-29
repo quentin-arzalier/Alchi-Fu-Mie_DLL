@@ -8,7 +8,7 @@ namespace AFM_Tests.TestData
         public static PlayerGame GetRockPlayer() => new(TestDecks.GetRockDeck());
         public static PlayerGame GetPaperPlayer() => new(TestDecks.GetPaperDeck());
         public static PlayerGame GetScissorsPlayer() => new(TestDecks.GetScissorsDeck());
-        public static PlayerGame GetElementPlayer(Element elt) => new(TestDecks.GetElementDeck(elt));
+        public static PlayerGame FromElement(Element elt) => new(TestDecks.GetElementDeck(elt));
 
     }
 }
