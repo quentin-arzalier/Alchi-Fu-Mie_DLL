@@ -273,7 +273,7 @@
             <summary>
                 Constructeur d'une carte élément
             </summary>
-            <param name="element">L'élément initial de la carte</param>
+            <param name="activeElement">L'élément initial de la carte</param>
         </member>
         <member name="P:AFM_DLL.Models.Cards.ElementCard.ActiveElement">
             <summary>

@@ -11,10 +11,10 @@ namespace AFM_DLL.Models.Cards
         /// <summary>
         ///     Constructeur d'une carte élément
         /// </summary>
-        /// <param name="element">L'élément initial de la carte</param>
-        public ElementCard(Element element)
+        /// <param name="activeElement">L'élément initial de la carte</param>
+        public ElementCard(Element activeElement)
         {
-            InitialElement = element;
+            InitialElement = activeElement;
         }
 
         /// <summary>
