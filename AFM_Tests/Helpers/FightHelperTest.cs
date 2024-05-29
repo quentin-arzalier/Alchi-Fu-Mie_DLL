@@ -1,11 +1,6 @@
 ﻿using AFM_DLL;
 using AFM_DLL.Helpers;
 using AFM_DLL.Models.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_Tests.Helpers
 {
@@ -15,7 +10,7 @@ namespace AFM_Tests.Helpers
         [TestCase(Element.ROCK, Element.SCISSORS, FightResult.BLUE_WIN)]
         [TestCase(Element.SCISSORS, Element.PAPER, FightResult.BLUE_WIN)]
         [TestCase(Element.PAPER, Element.ROCK, FightResult.BLUE_WIN)]
-        
+
         [TestCase(Element.ROCK, Element.PAPER, FightResult.RED_WIN)]
         [TestCase(Element.PAPER, Element.SCISSORS, FightResult.RED_WIN)]
         [TestCase(Element.SCISSORS, Element.ROCK, FightResult.RED_WIN)]

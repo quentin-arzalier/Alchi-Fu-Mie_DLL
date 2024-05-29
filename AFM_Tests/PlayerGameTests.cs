@@ -1,11 +1,5 @@
 ﻿using AFM_DLL.Models.PlayerInfo;
 using AFM_Tests.TestData;
-using NuGet.Frameworks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_Tests
 {

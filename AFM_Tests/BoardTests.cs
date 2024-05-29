@@ -1,15 +1,7 @@
 ﻿using AFM_DLL.Models.BoardData;
-using AFM_DLL.Models.PlayerInfo;
-using AFM_Tests.TestData;
-using AFM_DLL.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AFM_DLL.Models.Cards;
-using System.Drawing;
 using AFM_DLL.Models.Enum;
+using AFM_Tests.TestData;
 
 namespace AFM_Tests
 {
@@ -78,7 +70,7 @@ namespace AFM_Tests
             var bs = board.GetAllyBoardSide(true);
             var rs = board.GetEnemyBoardSide(true);
 
-            foreach(var position in Enum.GetValues<BoardPosition>())
+            foreach (var position in Enum.GetValues<BoardPosition>())
             {
                 bs.Player.Hand.Elements[0].AddToBoard(board, true, position);
                 rs.Player.Hand.Elements[0].AddToBoard(board, false, position);
@@ -224,7 +216,7 @@ namespace AFM_Tests
 
             SpellCard? bc = null;
             SpellCard? rc = null;
-            
+
             if (blueSidePlays)
             {
                 bc = bs.Player.Hand.Spells[0];

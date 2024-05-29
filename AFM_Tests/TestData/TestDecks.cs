@@ -2,11 +2,6 @@
 using AFM_DLL.Models.Cards;
 using AFM_DLL.Models.Enum;
 using AFM_DLL.Models.PlayerInfo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AFM_Tests.TestData
 {
