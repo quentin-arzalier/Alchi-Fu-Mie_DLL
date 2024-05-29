@@ -87,8 +87,23 @@ namespace AFM_DLL.Helpers
                 blueBoard.Player.RemoveHealth(damageMultiplier);
             else
             {
-                blueBoard.Player.RemoveHealth(damageMultiplier);
-                redBoard.Player.RemoveHealth(damageMultiplier);
+                if (board.Modifiers.Any(c => c == BoardModifiers.BLUE_PLAYER_WIN_TIE))
+                {
+                    redBoard.Player.RemoveHealth(damageMultiplier);
+                    board.Modifiers.Remove(BoardModifiers.BLUE_PLAYER_WIN_TIE);
+                }
+                else if (board.Modifiers.Any(c => c == BoardModifiers.RED_PLAYER_WIN_TIE))
+                {
+                    blueBoard.Player.RemoveHealth(damageMultiplier);
+                    board.Modifiers.Remove(BoardModifiers.RED_PLAYER_WIN_TIE);
+                }
+                else
+                {
+                    redBoard.Player.RemoveHealth(damageMultiplier);
+                    blueBoard.Player.RemoveHealth(damageMultiplier);
+                }
+
+                board.Modifiers.Remove(BoardModifiers.DOUBLE_DAMAGE);
             }
 
             return res;
@@ -115,14 +130,17 @@ namespace AFM_DLL.Helpers
                 {
                     if (res.HeroFightResult.Value == FightResult.DRAW)
                         res.BlueSideStartedOnDraw = true;
-
-                    res.SpellsInOrder.Add((board.BlueSide.SpellCard, true));
-                    res.SpellsInOrder.Add((board.RedSide.SpellCard, false));
+                    if (board.BlueSide.SpellCard.CanBeActived)
+                        res.SpellsInOrder.Add((board.BlueSide.SpellCard, true));
+                    if (board.RedSide.SpellCard.CanBeActived)
+                        res.SpellsInOrder.Add((board.RedSide.SpellCard, false));
                 }
                 else
                 {
-                    res.SpellsInOrder.Add((board.RedSide.SpellCard, false));
-                    res.SpellsInOrder.Add((board.BlueSide.SpellCard, true));
+                    if (board.RedSide.SpellCard.CanBeActived)
+                        res.SpellsInOrder.Add((board.RedSide.SpellCard, false));
+                    if (board.BlueSide.SpellCard.CanBeActived)
+                        res.SpellsInOrder.Add((board.BlueSide.SpellCard, true));
                 }
             }
             else if (board.BlueSide.SpellCard != null)

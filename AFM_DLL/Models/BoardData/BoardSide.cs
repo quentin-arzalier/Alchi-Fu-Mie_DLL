@@ -54,5 +54,9 @@ namespace AFM_DLL.Models.BoardData
         }
 
 
+        /// <summary>
+        ///     Évènement indiquant quand un héros voit son type surchargé (ou désurchargé)
+        /// </summary>
+        public event Action<bool> DuelTieWinnerOverrideChanged;
     }
 }

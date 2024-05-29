@@ -43,7 +43,7 @@ namespace AFM_DLL.Models.PlayerInfo
         internal bool CanRevertOverride { get; set; }
 
         /// <summary>
-        ///     Évènement indiquand quand un héros voit son type surchargé (ou désurchargé)
+        ///     Évènement indiquant quand un héros voit son type surchargé (ou désurchargé)
         /// </summary>
         public event Action<Element?> HeroOverrideChanged;
     }

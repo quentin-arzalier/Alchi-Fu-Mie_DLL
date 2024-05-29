@@ -1,6 +1,8 @@
 ﻿using AFM_DLL.Models.BoardData;
 using AFM_DLL.Models.Cards.Spells;
+using AFM_DLL.Models.Cards.Spells.CancelSpell;
 using AFM_DLL.Models.Cards.Spells.ReplaceElement;
+using AFM_DLL.Models.Cards.Spells.WinDuelTie;
 using AFM_DLL.Models.Enum;
 using System;
 
@@ -11,6 +13,19 @@ namespace AFM_DLL.Models.Cards
     /// </summary>
     public abstract class SpellCard : Card
     {
+        /// <summary>
+        ///     Indique si un sort peut être joué ou non
+        /// </summary>
+        public bool CanBeActived {
+            get
+            {
+                return true;
+            }
+            set
+            {
+                CanBeActived = value;
+            }
+        }
         /// <summary>
         ///     Génère une instance de carte sortilège en fonction du type de sort donné
         /// </summary>
@@ -35,6 +50,26 @@ namespace AFM_DLL.Models.Cards
                     return new DoubleDamageSpell();
                 case SpellType.REPLACE_ENEMY_ROCK_WITH_SCISSORS:
                     return new ReplaceEnemyRockWithScissors();
+                case SpellType.REPLACE_ENEMY_ROCK_WITH_PAPER:
+                    return new ReplaceEnemyRockWithPaper();
+                case SpellType.REPLACE_ENEMY_PAPER_WITH_SCISSORS:
+                    return new ReplaceEnemyPaperWithScissors();
+                case SpellType.REPLACE_ENEMY_PAPER_WITH_ROCK:
+                    return new ReplaceEnemyPaperWithRock();
+                case SpellType.REPLACE_ENEMY_SCISSORS_WITH_PAPER:
+                    return new ReplaceEnemyScissorsWithPaper();
+                case SpellType.REPLACE_ENEMY_SCISSORS_WITH_ROCK:
+                    return new ReplaceEnemyScissorsWithRock();
+                case SpellType.REPLACE_ENEMY_CARDS_WITH_PAPER:
+                    return new ReplaceEnemyCardsWithPaper();
+                case SpellType.REPLACE_ENEMY_CARDS_WITH_ROCK:
+                    return new ReplaceEnemyCardsWithRock();
+                case SpellType.REPLACE_ENEMY_CARDS_WITH_SCISSORS:
+                    return new ReplaceEnemyCardsWithScissors();
+                case SpellType.CANCEL_ENEMY_SPELL:
+                    return new CancelEnemySpell();
+                case SpellType.WIN_DUEL_TIE:
+                    return new WinDuelTie();
                 default:
                     throw new NotImplementedException($"Le sort de type {spell} n'a pas de classe attitrée.");
             }

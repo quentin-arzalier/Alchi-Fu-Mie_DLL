@@ -55,7 +55,7 @@ namespace AFM_DLL.Models.PlayerInfo
         /// <summary>
         ///     Défausse du joueur
         /// </summary>
-        public List<SpellCard> Defausse { get; private set; }
+        public List<Card> Defausse { get; private set; }
 
 
 
