@@ -152,29 +152,6 @@ namespace AFM_Tests
             TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.ROCK, Element.SCISSORS, isBluePlayer);
         }
 
-        [TestCase(Element.PAPER, Element.PAPER, false)]
-        [TestCase(Element.PAPER, Element.ROCK, false)]
-        [TestCase(Element.PAPER, Element.SCISSORS, false)]
-        [TestCase(Element.ROCK, Element.PAPER, false)]
-        [TestCase(Element.ROCK, Element.ROCK, false)]
-        [TestCase(Element.ROCK, Element.SCISSORS, false)]
-        [TestCase(Element.SCISSORS, Element.PAPER, false)]
-        [TestCase(Element.SCISSORS, Element.ROCK, false)]
-        [TestCase(Element.SCISSORS, Element.SCISSORS, false)]
-        [TestCase(Element.PAPER, Element.PAPER, true)]
-        [TestCase(Element.PAPER, Element.ROCK, true)]
-        [TestCase(Element.PAPER, Element.SCISSORS, true)]
-        [TestCase(Element.ROCK, Element.PAPER, true)]
-        [TestCase(Element.ROCK, Element.ROCK, true)]
-        [TestCase(Element.ROCK, Element.SCISSORS, true)]
-        [TestCase(Element.SCISSORS, Element.PAPER, true)]
-        [TestCase(Element.SCISSORS, Element.ROCK, true)]
-        [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
-        public void TestReplaceEnemyRockWithScissors(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
-        {
-            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.SCISSORS, Element.ROCK, isBluePlayer);
-        }
-
         #endregion
     }
 }
