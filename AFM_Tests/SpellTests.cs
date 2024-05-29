@@ -109,8 +109,15 @@ namespace AFM_Tests
             side.Player.Hand.Spells[0] = SpellCard.FromType(sourceElement switch
             {
                 Element.ROCK when targetElement == Element.SCISSORS => SpellType.REPLACE_ENEMY_ROCK_WITH_SCISSORS,
-                Element.PAPER => throw new NotImplementedException(),
-                Element.SCISSORS => throw new NotImplementedException(),
+                Element.ROCK when targetElement == Element.PAPER => throw new NotImplementedException(),
+
+                Element.PAPER when targetElement == Element.ROCK => throw new NotImplementedException(),
+                Element.PAPER when targetElement == Element.SCISSORS => throw new NotImplementedException(),
+
+                Element.SCISSORS when targetElement == Element.ROCK => throw new NotImplementedException(),
+                Element.SCISSORS when targetElement == Element.PAPER => throw new NotImplementedException(),
+
+                _ => throw new ArgumentException()
             });
 
             side.Player.Hand.Spells[0].AddToBoard(board, isBlueSideSpell, null);
@@ -143,6 +150,29 @@ namespace AFM_Tests
         public void TestReplaceEnemyRockWithScissors(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
         {
             TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.ROCK, Element.SCISSORS, isBluePlayer);
+        }
+
+        [TestCase(Element.PAPER, Element.PAPER, false)]
+        [TestCase(Element.PAPER, Element.ROCK, false)]
+        [TestCase(Element.PAPER, Element.SCISSORS, false)]
+        [TestCase(Element.ROCK, Element.PAPER, false)]
+        [TestCase(Element.ROCK, Element.ROCK, false)]
+        [TestCase(Element.ROCK, Element.SCISSORS, false)]
+        [TestCase(Element.SCISSORS, Element.PAPER, false)]
+        [TestCase(Element.SCISSORS, Element.ROCK, false)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, false)]
+        [TestCase(Element.PAPER, Element.PAPER, true)]
+        [TestCase(Element.PAPER, Element.ROCK, true)]
+        [TestCase(Element.PAPER, Element.SCISSORS, true)]
+        [TestCase(Element.ROCK, Element.PAPER, true)]
+        [TestCase(Element.ROCK, Element.ROCK, true)]
+        [TestCase(Element.ROCK, Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, Element.PAPER, true)]
+        [TestCase(Element.SCISSORS, Element.ROCK, true)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
+        public void TestReplaceEnemyRockWithScissors(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
+        {
+            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.SCISSORS, Element.ROCK, isBluePlayer);
         }
 
         #endregion
