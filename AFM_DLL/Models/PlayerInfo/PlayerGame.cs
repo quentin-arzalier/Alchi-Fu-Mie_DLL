@@ -145,7 +145,7 @@ namespace AFM_DLL.Models.PlayerInfo
 
         internal bool ReplaceHeroType(ElementCard card)
         {
-            if (card == null || Hand.Elements.Contains(card))
+            if (card == null || !Hand.Elements.Contains(card))
                 return false;
 
             if (Deck.Hero.OverrideCard != null && Deck.Hero.CanRevertOverride)
