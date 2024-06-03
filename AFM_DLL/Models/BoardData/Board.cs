@@ -201,5 +201,26 @@ namespace AFM_DLL.Models.BoardData
 
             NextAction = BoardState.DRAW_CARDS;
         }
+
+        /// <summary>
+        ///     Remplace le type actuel du héros avec une carte de la main du joueur.
+        /// </summary>
+        /// <param name="isBlueSide">Détermine quel joueur on cible</param>
+        /// <param name="replacement">La carte utilisée pour remplacer le type du héros</param>
+        /// <returns>Si l'opération a eu lieu avec succès</returns>
+        public bool ReplacePlayerHeroWithCard(bool isBlueSide, ElementCard replacement)
+        {
+            return GetAllyBoardSide(isBlueSide).Player.ReplaceHeroType(replacement);
+        }
+
+        /// <summary>
+        ///     Annule le remplacement du type du héros Si effectué pendant ce tour de jeu (impossible sinon).
+        /// </summary>
+        /// <param name="isBlueSide">Détermine quel joueur on cible</param>
+        /// <returns>Si l'opération a eu lieu avec succès</returns>
+        public bool CancelReplacePlayerHero(bool isBlueSide)
+        {
+            return GetAllyBoardSide(isBlueSide).Player.CancelHeroTypeReplacement();
+        }
     }
 }

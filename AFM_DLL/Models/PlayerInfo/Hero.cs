@@ -40,6 +40,9 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </summary>
         public ElementCard OverrideCard { get; internal set; }
 
-        internal bool CanRevertOverride { get; set; }
+        /// <summary>
+        ///     Indique si le remplacement de type peut être annulé
+        /// </summary>
+        public bool CanRevertOverride { get; internal set; }
     }
 }
