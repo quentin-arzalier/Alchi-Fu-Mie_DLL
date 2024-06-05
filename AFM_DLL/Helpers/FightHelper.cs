@@ -94,12 +94,12 @@ namespace AFM_DLL.Helpers
                     redBoard.Player.RemoveHealth(damageMultiplier);
                     res.RedDamage = damageMultiplier;
                 }
-                else if (board.Modifiers.Any(c => c == BoardModifiers.RED_PLAYER_WIN_TIE))
+                if (board.Modifiers.Any(c => c == BoardModifiers.RED_PLAYER_WIN_TIE))
                 {
                     blueBoard.Player.RemoveHealth(damageMultiplier);
                     res.BlueDamage = damageMultiplier;
                 }
-                else
+                if (board.Modifiers.All(c => c != BoardModifiers.RED_PLAYER_WIN_TIE && c != BoardModifiers.BLUE_PLAYER_WIN_TIE))
                 {
                     redBoard.Player.RemoveHealth(damageMultiplier);
                     blueBoard.Player.RemoveHealth(damageMultiplier);
