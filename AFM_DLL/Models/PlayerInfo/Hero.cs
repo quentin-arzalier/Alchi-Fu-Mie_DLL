@@ -12,11 +12,11 @@ namespace AFM_DLL.Models.PlayerInfo
         ///     Construit un héros
         /// </summary>
         /// <param name="name">Le nom du héros</param>
-        /// <param name="element">L'élément initial du héros</param>
-        public Hero(string name, Element element)
+        /// <param name="activeElement">L'élément initial du héros</param>
+        public Hero(string name, Element activeElement)
         {
             Name = name;
-            InitialElement = element;
+            InitialElement = activeElement;
         }
 
         /// <summary>

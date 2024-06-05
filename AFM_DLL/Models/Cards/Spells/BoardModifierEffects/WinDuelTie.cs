@@ -24,9 +24,6 @@ namespace AFM_DLL.Models.Cards.Spells.WinDuelTie
         }
 
         /// <inheritdoc/>
-        public override SpellType GetSpellType()
-        {
-            return SpellType.WIN_DUEL_TIE;
-        }
+        public override SpellType SpellType => SpellType.WIN_DUEL_TIE;
     }
 }

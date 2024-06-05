@@ -29,9 +29,6 @@ namespace AFM_DLL.Models.Cards.Spells
         }
 
         /// <inheritdoc/>
-        public override SpellType GetSpellType()
-        {
-            return SpellType.ADD_MANA_FROM_SCISSORS;
-        }
+        public override SpellType SpellType => SpellType.ADD_MANA_FROM_SCISSORS;
     }
 }

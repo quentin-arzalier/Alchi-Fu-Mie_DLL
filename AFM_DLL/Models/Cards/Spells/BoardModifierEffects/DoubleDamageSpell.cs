@@ -27,9 +27,6 @@ namespace AFM_DLL.Models.Cards.Spells
         }
 
         /// <inheritdoc/>
-        public override SpellType GetSpellType()
-        {
-            return SpellType.DOUBLE_DAMAGE;
-        }
+        public override SpellType SpellType => SpellType.DOUBLE_DAMAGE;
     }
 }

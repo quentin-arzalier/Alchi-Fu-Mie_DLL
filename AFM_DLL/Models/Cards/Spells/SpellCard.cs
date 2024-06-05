@@ -16,17 +16,8 @@ namespace AFM_DLL.Models.Cards
         /// <summary>
         ///     Indique si un sort peut être joué ou non
         /// </summary>
-        public bool CanBeActived
-        {
-            get
-            {
-                return true;
-            }
-            set
-            {
-                CanBeActived = value;
-            }
-        }
+        public bool CanBeActived { get; set; } = true;
+
         /// <summary>
         ///     Génère une instance de carte sortilège en fonction du type de sort donné
         /// </summary>
@@ -88,7 +79,7 @@ namespace AFM_DLL.Models.Cards
         /// <summary>
         ///     Le type du sort tel qu'indiqué à l'instanciation du sort
         /// </summary>
-        public abstract SpellType GetSpellType();
+        public abstract SpellType SpellType { get; }
 
         /// <summary>
         ///     Indique si le sort peut être joué en fonction du mana actuel d'un joueur
@@ -147,7 +138,7 @@ namespace AFM_DLL.Models.Cards
                 return false;
 
             var side = board.GetAllyBoardSide(isBlueSide);
-            if (side.SpellCard == null || side.SpellCard.GetSpellType() != this.GetSpellType())
+            if (side.SpellCard == null || side.SpellCard.SpellType != this.SpellType)
                 return false;
 
             side.SpellCard = null;

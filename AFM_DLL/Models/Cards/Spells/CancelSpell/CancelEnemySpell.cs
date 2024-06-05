@@ -27,9 +27,6 @@ namespace AFM_DLL.Models.Cards.Spells.CancelSpell
         }
 
         /// <inheritdoc/>
-        public override SpellType GetSpellType()
-        {
-            return SpellType.REPLACE_ENEMY_CARDS_WITH_PAPER;
-        }
+        public override SpellType SpellType => SpellType.REPLACE_ENEMY_CARDS_WITH_PAPER;
     }
 }

@@ -34,9 +34,6 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         }
 
         /// <inheritdoc/>
-        public override SpellType GetSpellType()
-        {
-            return SpellType.REPLACE_ENEMY_SCISSORS_WITH_PAPER;
-        }
+        public override SpellType SpellType => SpellType.REPLACE_ENEMY_SCISSORS_WITH_PAPER;
     }
 }
