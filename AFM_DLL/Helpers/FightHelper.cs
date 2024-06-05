@@ -92,13 +92,11 @@ namespace AFM_DLL.Helpers
                 if (board.Modifiers.Any(c => c == BoardModifiers.BLUE_PLAYER_WIN_TIE))
                 {
                     redBoard.Player.RemoveHealth(damageMultiplier);
-                    board.Modifiers.Remove(BoardModifiers.BLUE_PLAYER_WIN_TIE);
                     res.RedDamage = damageMultiplier;
                 }
                 else if (board.Modifiers.Any(c => c == BoardModifiers.RED_PLAYER_WIN_TIE))
                 {
                     blueBoard.Player.RemoveHealth(damageMultiplier);
-                    board.Modifiers.Remove(BoardModifiers.RED_PLAYER_WIN_TIE);
                     res.BlueDamage = damageMultiplier;
                 }
                 else
@@ -108,8 +106,6 @@ namespace AFM_DLL.Helpers
                     res.BlueDamage = damageMultiplier;
                     res.RedDamage = damageMultiplier;
                 }
-
-                board.Modifiers.Remove(BoardModifiers.DOUBLE_DAMAGE);
             }
 
             return res;

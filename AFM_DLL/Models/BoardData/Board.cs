@@ -218,6 +218,8 @@ namespace AFM_DLL.Models.BoardData
             RedSide.IsSideReady = false;
             RedSide.DiscardSide(isBlueSide: false);
 
+            Modifiers.Clear();
+
             NextAction = BoardState.DRAW_CARDS;
         }
 
