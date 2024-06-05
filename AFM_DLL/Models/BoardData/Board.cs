@@ -1,4 +1,5 @@
-﻿using AFM_DLL.Helpers;
+﻿using AFM_DLL.Extensions;
+using AFM_DLL.Helpers;
 using AFM_DLL.Models.Cards;
 using AFM_DLL.Models.PlayerInfo;
 using AFM_DLL.Models.UnityResults;
@@ -79,6 +80,10 @@ namespace AFM_DLL.Models.BoardData
         /// </summary>
         public List<ElementCard> AllElementsOfBoard => BlueSide.AllElementsOfSide.Concat(RedSide.AllElementsOfSide).ToList();
 
+
+
+        private SpellCardEvaluationResultInternal _spellCardResults;
+
         /// <summary>
         ///     Effectue la phase de tirage du plateau
         /// </summary>
@@ -146,13 +151,25 @@ namespace AFM_DLL.Models.BoardData
             if (NextAction != BoardState.EVALUATE_SPELLS)
                 throw new ApplicationException($"La fonction EvaluateSpells ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
 
-            NextAction = BoardState.EVALUATE_ELEMENTS;
+            if (_spellCardResults == null)
+                _spellCardResults = FightHelper.GetOrderedSpellCards(this);
 
-            var res = FightHelper.GetOrderedSpellCards(this);
-            foreach (var card in res.SpellsInOrder)
+            var res = new SpellCardEvaluationResult();
+
+            if (_spellCardResults.SpellsInOrder.Any())
             {
-                card.card.ActivateSpell(this, card.isBlueSide);
+                var (card, isBlueSide) = _spellCardResults.SpellsInOrder.PopFirst();
+                card.ActivateSpell(this, isBlueSide);
+
+                res.SpellCard = card;
+                res.IsBlueSide = isBlueSide;
             }
+
+            if (_spellCardResults.SpellsInOrder.Any())
+                res.HasMoreSpells = true;
+            else
+                NextAction = BoardState.EVALUATE_ELEMENTS;
+
             return res;
         }
 
@@ -195,6 +212,8 @@ namespace AFM_DLL.Models.BoardData
 
             BlueSide.IsSideReady = false;
             BlueSide.DiscardSide(isBlueSide: true);
+
+            _spellCardResults = null;
 
             RedSide.IsSideReady = false;
             RedSide.DiscardSide(isBlueSide: false);

@@ -77,30 +77,36 @@ namespace AFM_DLL.Helpers
             //var damageMultiplier = (uint)Math.Pow(2, board.Modifiers.Count(c => c == BoardModifiers.DOUBLE_DAMAGE));
             uint damageMultiplier = (uint)(board.Modifiers.Any(c => c == BoardModifiers.DOUBLE_DAMAGE) ? 2 : 1);
 
-            if (res.CardFightResult == FightResult.BLUE_WIN)
+            if (res.CardFightResult == FightResult.BLUE_WIN || res.HeroFightResult == FightResult.BLUE_WIN)
+            {
                 redBoard.Player.RemoveHealth(damageMultiplier);
-            else if (res.CardFightResult == FightResult.RED_WIN)
+                res.RedDamage = damageMultiplier;
+            }
+            else if (res.CardFightResult == FightResult.RED_WIN || res.HeroFightResult == FightResult.RED_WIN)
+            {
                 blueBoard.Player.RemoveHealth(damageMultiplier);
-            else if (res.HeroFightResult == FightResult.BLUE_WIN)
-                redBoard.Player.RemoveHealth(damageMultiplier);
-            else if (res.HeroFightResult == FightResult.RED_WIN)
-                blueBoard.Player.RemoveHealth(damageMultiplier);
+                res.BlueDamage = damageMultiplier;
+            }
             else
             {
                 if (board.Modifiers.Any(c => c == BoardModifiers.BLUE_PLAYER_WIN_TIE))
                 {
                     redBoard.Player.RemoveHealth(damageMultiplier);
                     board.Modifiers.Remove(BoardModifiers.BLUE_PLAYER_WIN_TIE);
+                    res.RedDamage = damageMultiplier;
                 }
                 else if (board.Modifiers.Any(c => c == BoardModifiers.RED_PLAYER_WIN_TIE))
                 {
                     blueBoard.Player.RemoveHealth(damageMultiplier);
                     board.Modifiers.Remove(BoardModifiers.RED_PLAYER_WIN_TIE);
+                    res.BlueDamage = damageMultiplier;
                 }
                 else
                 {
                     redBoard.Player.RemoveHealth(damageMultiplier);
                     blueBoard.Player.RemoveHealth(damageMultiplier);
+                    res.BlueDamage = damageMultiplier;
+                    res.RedDamage = damageMultiplier;
                 }
 
                 board.Modifiers.Remove(BoardModifiers.DOUBLE_DAMAGE);
@@ -115,9 +121,9 @@ namespace AFM_DLL.Helpers
         /// </summary>
         /// <param name="board">Le plateau qui contient les cartes sortilèges à évaluer</param>
         /// <returns>La liste ordonnées des cartes sortilèges ainsi que leur côté</returns>
-        public static SpellCardEvaluationResult GetOrderedSpellCards(Board board)
+        internal static SpellCardEvaluationResultInternal GetOrderedSpellCards(Board board)
         {
-            var res = new SpellCardEvaluationResult();
+            var res = new SpellCardEvaluationResultInternal();
 
             if (board.BlueSide.SpellCard != null && board.RedSide.SpellCard != null)
             {

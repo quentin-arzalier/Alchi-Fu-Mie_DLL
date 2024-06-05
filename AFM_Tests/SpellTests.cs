@@ -37,7 +37,9 @@ namespace AFM_Tests
             board.SetSideReady(true);
             board.SetSideReady(false);
 
-            board.EvaluateSpells();
+            var res = board.EvaluateSpells();
+            if (res.HasMoreSpells)
+                board.EvaluateSpells();
 
             Assert.That(side.Player.ManaPoints, Is.EqualTo(expectedMana));
         }
@@ -124,7 +126,9 @@ namespace AFM_Tests
             board.SetSideReady(true);
             board.SetSideReady(false);
 
-            board.EvaluateSpells();
+            var res = board.EvaluateSpells();
+            if (res.HasMoreSpells)
+                board.EvaluateSpells();
 
             Assert.That(enemySide.AllElementsOfSide.Count(card => card.ActiveElement == targetElement), Is.EqualTo(expectedCardCount));
         }

@@ -16,7 +16,8 @@ namespace AFM_DLL.Models.Cards
         /// <summary>
         ///     Indique si un sort peut être joué ou non
         /// </summary>
-        public bool CanBeActived {
+        public bool CanBeActived
+        {
             get
             {
                 return true;

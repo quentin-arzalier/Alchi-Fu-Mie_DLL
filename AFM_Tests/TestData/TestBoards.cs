@@ -48,7 +48,9 @@ namespace AFM_Tests.TestData
             board.SetSideReady(isBlueSide: true);
             board.SetSideReady(isBlueSide: false);
 
-            board.EvaluateSpells();
+            var res = board.EvaluateSpells();
+            if (res.HasMoreSpells)
+                board.EvaluateSpells();
             board.EvaluateCardColumns();
 
             return board;

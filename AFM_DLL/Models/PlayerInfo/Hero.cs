@@ -35,10 +35,26 @@ namespace AFM_DLL.Models.PlayerInfo
         /// </summary>
         private Element InitialElement { get; set; }
 
+
+        private ElementCard _overrideCard;
+
         /// <summary>
         ///     Surcharge d'élément du héros (potentiellement dû à un remplacement)
         /// </summary>
-        public ElementCard OverrideCard { get; internal set; }
+        public ElementCard OverrideCard
+        {
+            get { return _overrideCard; }
+            internal set
+            {
+                _overrideCard = value;
+                OverrideCardChanged?.Invoke(value);
+            }
+        }
+
+        /// <summary>
+        ///     Évènement indiquant quand la carte override a changé
+        /// </summary>
+        public event Action<ElementCard> OverrideCardChanged;
 
         /// <summary>
         ///     Indique si le remplacement de type peut être annulé

@@ -15,6 +15,17 @@ namespace AFM_DLL.Models.UnityResults
         /// <summary>
         ///     Le résultat du combat de Héros (null si pas d'égalité aux cartes)
         /// </summary>
+
         public FightResult? HeroFightResult { get; internal set; }
+
+        /// <summary>
+        ///     Dégâts subis par le joueur bleu
+        /// </summary>
+        public uint BlueDamage { get; internal set; }
+
+        /// <summary>
+        ///     Dégâts subis par le joueur rouge
+        /// </summary>
+        public uint RedDamage { get; internal set; }
     }
 }

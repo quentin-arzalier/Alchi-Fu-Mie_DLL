@@ -1,6 +1,5 @@
 using AFM_DLL.Models.BoardData;
 using AFM_DLL.Models.Enum;
-using System.Linq;
 
 namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
 {

@@ -79,6 +79,7 @@
     <Compile Include="Models\UnityResults\DrawingPhaseResult.cs" />
     <Compile Include="Models\UnityResults\DrawResult.cs" />
     <Compile Include="Models\UnityResults\SpellCardEvaluationResult.cs" />
+    <Compile Include="Models\UnityResults\SpellCardEvaluationResultInternal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -1,6 +1,5 @@
 ﻿using AFM_DLL.Models.BoardData;
 using AFM_DLL.Models.Cards;
-using AFM_DLL.Models.Enum;
 using AFM_Tests.TestData;
 
 namespace AFM_Tests
@@ -233,59 +232,49 @@ namespace AFM_Tests
 
             Assume.That(board.NextAction, Is.EqualTo(BoardState.EVALUATE_SPELLS));
 
-            var spellsResult = board.EvaluateSpells();
+            var spellsResult1 = board.EvaluateSpells();
+            var spellsResult2 = spellsResult1.HasMoreSpells ? board.EvaluateSpells() : null;
+
+            var lastSpellsResult = spellsResult2 ?? spellsResult1;
+
+            var nbCardsPlayed = (spellsResult1.SpellCard != null ? 1 : 0) + (spellsResult2?.SpellCard != null ? 1 : 0);
 
             Assert.Multiple(() =>
             {
-                Assert.That(spellsResult.SpellsInOrder, Has.Count.EqualTo(expectedNbSpellsPlayed));
-                Assert.That(spellsResult.BlueSideStartedOnDraw, Is.Null);
+                Assert.That(nbCardsPlayed, Is.EqualTo(expectedNbSpellsPlayed));
                 if (blueSidePlays)
                 {
                     if (blueSidePrio)
                     {
-                        Assert.That(spellsResult.SpellsInOrder.First().isBlueSide, Is.True);
-                        Assert.That(spellsResult.SpellsInOrder.First().card, Is.EqualTo(bc));
-                        if (redSidePlays)
-                            Assert.That(spellsResult.HeroFightResult, Is.EqualTo(FightResult.BLUE_WIN));
-                        else
-                            Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                        Assert.That(spellsResult1, Is.Not.Null);
+                        Assert.That(spellsResult1.IsBlueSide, Is.True);
+                        Assert.That(spellsResult1.SpellCard, Is.EqualTo(bc));
                     }
                     else
                     {
-                        Assert.That(spellsResult.SpellsInOrder.Last().isBlueSide, Is.True);
-                        Assert.That(spellsResult.SpellsInOrder.Last().card, Is.EqualTo(bc));
-                        if (redSidePlays)
-                            Assert.That(spellsResult.HeroFightResult, Is.EqualTo(FightResult.RED_WIN));
-                        else
-                            Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                        Assert.That(lastSpellsResult, Is.Not.Null);
+                        Assert.That(lastSpellsResult.IsBlueSide, Is.True);
+                        Assert.That(lastSpellsResult.SpellCard, Is.EqualTo(bc));
                     }
                 }
                 if (redSidePlays)
                 {
                     if (!blueSidePrio)
                     {
-                        Assert.That(spellsResult.SpellsInOrder.First().isBlueSide, Is.False);
-                        Assert.That(spellsResult.SpellsInOrder.First().card, Is.EqualTo(rc));
-                        if (blueSidePlays)
-                            Assert.That(spellsResult.HeroFightResult, Is.EqualTo(FightResult.RED_WIN));
-                        else
-                            Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                        Assert.That(spellsResult1, Is.Not.Null);
+                        Assert.That(spellsResult1.IsBlueSide, Is.False);
+                        Assert.That(spellsResult1.SpellCard, Is.EqualTo(rc));
                     }
                     else
                     {
-                        Assert.That(spellsResult.SpellsInOrder.Last().isBlueSide, Is.False);
-                        Assert.That(spellsResult.SpellsInOrder.Last().card, Is.EqualTo(rc));
-                        if (blueSidePlays)
-                            Assert.That(spellsResult.HeroFightResult, Is.EqualTo(FightResult.BLUE_WIN));
-                        else
-                            Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                        Assert.That(lastSpellsResult, Is.Not.Null);
+                        Assert.That(lastSpellsResult.IsBlueSide, Is.False);
+                        Assert.That(lastSpellsResult.SpellCard, Is.EqualTo(rc));
                     }
                 }
-                if (!blueSidePlays && !redSidePlays)
-                    Assert.That(spellsResult.HeroFightResult.HasValue, Is.False);
+                if (redSidePlays && blueSidePlays)
+                    Assert.That(spellsResult1.HasMoreSpells, Is.True);
             });
-
-
         }
 
 
@@ -340,7 +329,9 @@ namespace AFM_Tests
                 board.DrawCards();
                 board.SetSideReady(isBlueSide: true);
                 board.SetSideReady(isBlueSide: false);
-                board.EvaluateSpells();
+                var res = board.EvaluateSpells();
+                if (res.HasMoreSpells)
+                    board.EvaluateSpells();
                 board.EvaluateCardColumns();
                 board.ResetBoard();
             }
@@ -373,7 +364,9 @@ namespace AFM_Tests
                 board.SetSideReady(isBlueSide: true);
                 board.SetSideReady(isBlueSide: false);
 
-                board.EvaluateSpells();
+                var res = board.EvaluateSpells();
+                if (res.HasMoreSpells)
+                    board.EvaluateSpells();
                 board.EvaluateCardColumns();
                 board.ResetBoard();
             }
@@ -424,7 +417,10 @@ namespace AFM_Tests
                 board.SetSideReady(isBlueSide: true);
                 board.SetSideReady(isBlueSide: false);
 
-                board.EvaluateSpells();
+                var res = board.EvaluateSpells();
+                if (res.HasMoreSpells)
+                    board.EvaluateSpells();
+
                 board.EvaluateCardColumns();
                 board.ResetBoard();
             }
