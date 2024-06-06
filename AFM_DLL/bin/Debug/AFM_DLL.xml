@@ -730,7 +730,7 @@
                 Surcharge les cartes ciseaux de l'ennemi par des cartes pierre
             </summary>
         </member>
-        <member name="F:AFM_DLL.Models.Enum.SpellType.REPLACE_ENEMY_CARDS_WITH_PLAYER_CARDS">
+        <member name="F:AFM_DLL.Models.Enum.SpellType.SWAP_ENEMY_CARDS_WITH_PLAYER_CARDS">
             <summary>
                 Surcharge les cartes de l'ennemi par les cartes du joueur 
             </summary>
@@ -1049,6 +1049,11 @@
         <member name="P:AFM_DLL.Models.UnityResults.SpellCardEvaluationResult.HasMoreSpells">
             <summary>
                 Si un autre tour de carte sort doit être joué après celui ci
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.UnityResults.SpellCardEvaluationResult.SpellsStackSize">
+            <summary>
+                Le nombre de cartes sorts qui vont être jouées
             </summary>
         </member>
         <member name="T:AFM_DLL.Models.UnityResults.SpellCardEvaluationResultInternal">

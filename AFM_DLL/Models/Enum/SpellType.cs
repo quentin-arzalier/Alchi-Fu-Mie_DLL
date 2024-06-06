@@ -56,7 +56,7 @@
         /// <summary>
         ///     Surcharge les cartes de l'ennemi par les cartes du joueur 
         /// </summary>
-        REPLACE_ENEMY_CARDS_WITH_PLAYER_CARDS,
+        SWAP_ENEMY_CARDS_WITH_PLAYER_CARDS,
 
         /// <summary>
         ///     Surcharge les cartes de l'ennemi par des cartes pierre

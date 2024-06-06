@@ -1,8 +1,10 @@
 ﻿using AFM_DLL;
+using AFM_DLL.Helpers;
 using AFM_DLL.Models.BoardData;
 using AFM_DLL.Models.Cards;
 using AFM_DLL.Models.Enum;
 using AFM_Tests.TestData;
+using System.Drawing;
 
 namespace AFM_Tests
 {
@@ -111,13 +113,13 @@ namespace AFM_Tests
             side.Player.Hand.Spells[0] = SpellCard.FromType(sourceElement switch
             {
                 Element.ROCK when targetElement == Element.SCISSORS => SpellType.REPLACE_ENEMY_ROCK_WITH_SCISSORS,
-                Element.ROCK when targetElement == Element.PAPER => throw new NotImplementedException(),
+                Element.ROCK when targetElement == Element.PAPER => SpellType.REPLACE_ENEMY_ROCK_WITH_PAPER,
 
-                Element.PAPER when targetElement == Element.ROCK => throw new NotImplementedException(),
-                Element.PAPER when targetElement == Element.SCISSORS => throw new NotImplementedException(),
+                Element.PAPER when targetElement == Element.ROCK => SpellType.REPLACE_ENEMY_PAPER_WITH_ROCK,
+                Element.PAPER when targetElement == Element.SCISSORS => SpellType.REPLACE_ENEMY_PAPER_WITH_SCISSORS,
 
-                Element.SCISSORS when targetElement == Element.ROCK => throw new NotImplementedException(),
-                Element.SCISSORS when targetElement == Element.PAPER => throw new NotImplementedException(),
+                Element.SCISSORS when targetElement == Element.ROCK => SpellType.REPLACE_ENEMY_SCISSORS_WITH_ROCK,
+                Element.SCISSORS when targetElement == Element.PAPER => SpellType.REPLACE_ENEMY_SCISSORS_WITH_PAPER,
 
                 _ => throw new ArgumentException()
             });
@@ -156,6 +158,260 @@ namespace AFM_Tests
             TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.ROCK, Element.SCISSORS, isBluePlayer);
         }
 
+
+        [TestCase(Element.PAPER, Element.PAPER, false)]
+        [TestCase(Element.PAPER, Element.ROCK, false)]
+        [TestCase(Element.PAPER, Element.SCISSORS, false)]
+        [TestCase(Element.ROCK, Element.PAPER, false)]
+        [TestCase(Element.ROCK, Element.ROCK, false)]
+        [TestCase(Element.ROCK, Element.SCISSORS, false)]
+        [TestCase(Element.SCISSORS, Element.PAPER, false)]
+        [TestCase(Element.SCISSORS, Element.ROCK, false)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, false)]
+        [TestCase(Element.PAPER, Element.PAPER, true)]
+        [TestCase(Element.PAPER, Element.ROCK, true)]
+        [TestCase(Element.PAPER, Element.SCISSORS, true)]
+        [TestCase(Element.ROCK, Element.PAPER, true)]
+        [TestCase(Element.ROCK, Element.ROCK, true)]
+        [TestCase(Element.ROCK, Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, Element.PAPER, true)]
+        [TestCase(Element.SCISSORS, Element.ROCK, true)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
+        public void TestReplaceEnemyRockWithPaper(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
+        {
+            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.ROCK, Element.PAPER, isBluePlayer);
+        }
+
+        [TestCase(Element.PAPER, Element.PAPER, false)]
+        [TestCase(Element.PAPER, Element.ROCK, false)]
+        [TestCase(Element.PAPER, Element.SCISSORS, false)]
+        [TestCase(Element.ROCK, Element.PAPER, false)]
+        [TestCase(Element.ROCK, Element.ROCK, false)]
+        [TestCase(Element.ROCK, Element.SCISSORS, false)]
+        [TestCase(Element.SCISSORS, Element.PAPER, false)]
+        [TestCase(Element.SCISSORS, Element.ROCK, false)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, false)]
+        [TestCase(Element.PAPER, Element.PAPER, true)]
+        [TestCase(Element.PAPER, Element.ROCK, true)]
+        [TestCase(Element.PAPER, Element.SCISSORS, true)]
+        [TestCase(Element.ROCK, Element.PAPER, true)]
+        [TestCase(Element.ROCK, Element.ROCK, true)]
+        [TestCase(Element.ROCK, Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, Element.PAPER, true)]
+        [TestCase(Element.SCISSORS, Element.ROCK, true)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
+        public void TestReplaceEnemyPaperWithRock(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
+        {
+            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.PAPER, Element.ROCK, isBluePlayer);
+        }
+
+        [TestCase(Element.PAPER, Element.PAPER, false)]
+        [TestCase(Element.PAPER, Element.ROCK, false)]
+        [TestCase(Element.PAPER, Element.SCISSORS, false)]
+        [TestCase(Element.ROCK, Element.PAPER, false)]
+        [TestCase(Element.ROCK, Element.ROCK, false)]
+        [TestCase(Element.ROCK, Element.SCISSORS, false)]
+        [TestCase(Element.SCISSORS, Element.PAPER, false)]
+        [TestCase(Element.SCISSORS, Element.ROCK, false)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, false)]
+        [TestCase(Element.PAPER, Element.PAPER, true)]
+        [TestCase(Element.PAPER, Element.ROCK, true)]
+        [TestCase(Element.PAPER, Element.SCISSORS, true)]
+        [TestCase(Element.ROCK, Element.PAPER, true)]
+        [TestCase(Element.ROCK, Element.ROCK, true)]
+        [TestCase(Element.ROCK, Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, Element.PAPER, true)]
+        [TestCase(Element.SCISSORS, Element.ROCK, true)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
+        public void TestReplaceEnemyPaperWithScissors(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
+        {
+            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.PAPER, Element.SCISSORS, isBluePlayer);
+        }
+
+        [TestCase(Element.PAPER, Element.PAPER, false)]
+        [TestCase(Element.PAPER, Element.ROCK, false)]
+        [TestCase(Element.PAPER, Element.SCISSORS, false)]
+        [TestCase(Element.ROCK, Element.PAPER, false)]
+        [TestCase(Element.ROCK, Element.ROCK, false)]
+        [TestCase(Element.ROCK, Element.SCISSORS, false)]
+        [TestCase(Element.SCISSORS, Element.PAPER, false)]
+        [TestCase(Element.SCISSORS, Element.ROCK, false)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, false)]
+        [TestCase(Element.PAPER, Element.PAPER, true)]
+        [TestCase(Element.PAPER, Element.ROCK, true)]
+        [TestCase(Element.PAPER, Element.SCISSORS, true)]
+        [TestCase(Element.ROCK, Element.PAPER, true)]
+        [TestCase(Element.ROCK, Element.ROCK, true)]
+        [TestCase(Element.ROCK, Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, Element.PAPER, true)]
+        [TestCase(Element.SCISSORS, Element.ROCK, true)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
+        public void TestReplaceEnemyScissorsWithPaper(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
+        {
+            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.SCISSORS, Element.PAPER, isBluePlayer);
+        }
+
+        [TestCase(Element.PAPER, Element.PAPER, false)]
+        [TestCase(Element.PAPER, Element.ROCK, false)]
+        [TestCase(Element.PAPER, Element.SCISSORS, false)]
+        [TestCase(Element.ROCK, Element.PAPER, false)]
+        [TestCase(Element.ROCK, Element.ROCK, false)]
+        [TestCase(Element.ROCK, Element.SCISSORS, false)]
+        [TestCase(Element.SCISSORS, Element.PAPER, false)]
+        [TestCase(Element.SCISSORS, Element.ROCK, false)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, false)]
+        [TestCase(Element.PAPER, Element.PAPER, true)]
+        [TestCase(Element.PAPER, Element.ROCK, true)]
+        [TestCase(Element.PAPER, Element.SCISSORS, true)]
+        [TestCase(Element.ROCK, Element.PAPER, true)]
+        [TestCase(Element.ROCK, Element.ROCK, true)]
+        [TestCase(Element.ROCK, Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, Element.PAPER, true)]
+        [TestCase(Element.SCISSORS, Element.ROCK, true)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
+        public void TestReplaceEnemyScissorsWithRock(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
+        {
+            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.SCISSORS, Element.PAPER, isBluePlayer);
+        }
+        private void TransformEnemyElementIntoElement(Element targetElement, bool isBlueSideSpell)
+        {
+            var board = new Board(TestPlayers.GetVariousElementPlayer(), TestPlayers.GetVariousElementPlayer());
+            TestBoards.FillBoardWithCardsFromDrawPhase(board);
+
+            var expectedCardCount = 3;
+
+            var side = board.GetAllyBoardSide(isBlueSideSpell);
+            var enemySide = board.GetEnemyBoardSide(isBlueSideSpell);
+            side.Player.AddMana(2);
+
+            side.Player.Hand.Spells[0] = SpellCard.FromType(targetElement switch
+            {
+                Element.ROCK => SpellType.REPLACE_ENEMY_CARDS_WITH_ROCK,
+                Element.PAPER => SpellType.REPLACE_ENEMY_CARDS_WITH_PAPER,
+                Element.SCISSORS => SpellType.REPLACE_ENEMY_CARDS_WITH_SCISSORS,
+
+                _ => throw new ArgumentException()
+            });
+
+            side.Player.Hand.Spells[0].AddToBoard(board, isBlueSideSpell, null);
+            board.SetSideReady(true);
+            board.SetSideReady(false);
+
+            var res = board.EvaluateSpells();
+            if (res.HasMoreSpells)
+                board.EvaluateSpells();
+
+            Assert.That(enemySide.AllElementsOfSide.Count(card => card.ActiveElement == targetElement), Is.EqualTo(expectedCardCount));
+        }
+
+        [TestCase(Element.PAPER, true)]
+        [TestCase(Element.PAPER, false)]
+        [TestCase(Element.ROCK, true)]
+        [TestCase(Element.ROCK, false)]
+        [TestCase(Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, false)]
+        public void TestReplaceEnemyElementsWithAnyElement(Element targetElement, bool isBluePlayer)
+        {
+            TransformEnemyElementIntoElement(targetElement, isBluePlayer);
+        }
+
+        public void DisableCanBeActivatedSpell(SpellType redPlayerSpellType, bool isBlueSideSpell)
+        {
+            var board = new Board(TestPlayers.GetVariousElementPlayer(), TestPlayers.GetVariousElementPlayer());
+            TestBoards.FillBoardWithCardsFromDrawPhase(board);
+
+            var side = board.GetAllyBoardSide(isBlueSideSpell);
+            var enemySide = board.GetEnemyBoardSide(isBlueSideSpell);
+            side.Player.AddMana(3);
+            enemySide.Player.AddMana(3);
+            side.Player.Hand.Spells[0].AddToBoard(board, isBlueSideSpell, null);
+            enemySide.Player.Hand.Spells[0].AddToBoard(board, isBlueSideSpell, null);
+            board.SetSideReady(true);
+            board.SetSideReady(false);
+            var res = board.EvaluateSpells();
+            var expectedSpellStackSize = 1;
+            Assert.That(res.SpellsStackSize, Is.EqualTo(expectedSpellStackSize));
+        }
+
+        [TestCase(SpellType.ADD_MANA_FROM_PAPER, false)]
+        [TestCase(SpellType.ADD_MANA_FROM_ROCK, false)]
+        [TestCase(SpellType.ADD_MANA_FROM_SCISSORS, false)]
+        public void TestCancelEnemySpell(SpellType redPlayerSpellType, bool isBludSideSpell)
+        {
+            DisableCanBeActivatedSpell(redPlayerSpellType, isBludSideSpell);
+        }
+
+        public void SwapElementsCards(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
+        {
+            var board = new Board(TestPlayers.FromElement(bluePlayerElement), TestPlayers.FromElement(redPlayerElement));
+            TestBoards.FillBoardWithCardsFromDrawPhase(board);
+            var playerCards = board.GetAllyBoardSide(isBluePlayer).AllElementsOfSide.Select(x => x.ActiveElement).ToList();
+            var enemyCards = board.GetEnemyBoardSide(isBluePlayer).AllElementsOfSide.Select(x => x.ActiveElement).ToList();
+            var side = board.GetAllyBoardSide(isBluePlayer);
+            side.Player.AddMana(2);
+            side.Player.Hand.Spells[0] = SpellCard.FromType(SpellType.SWAP_ENEMY_CARDS_WITH_PLAYER_CARDS);
+            side.Player.Hand.Spells[0].AddToBoard(board, isBluePlayer, null);
+            board.SetSideReady(true);
+            board.SetSideReady(false);
+            board.EvaluateSpells();
+            Assert.That(board.GetEnemyBoardSide(isBluePlayer).AllElementsOfSide.Select(x => x.ActiveElement).ToList(),
+                Is.EquivalentTo(playerCards));
+            Assert.That(board.GetAllyBoardSide(isBluePlayer).AllElementsOfSide.Select(x => x.ActiveElement).ToList(), 
+                Is.EquivalentTo(enemyCards));
+        }
+
+        [TestCase(Element.PAPER, Element.PAPER, true)]
+        [TestCase(Element.PAPER, Element.SCISSORS, true)]
+        [TestCase(Element.PAPER, Element.ROCK, true)]
+        [TestCase(Element.ROCK, Element.ROCK, true)]
+        [TestCase(Element.ROCK, Element.PAPER, true)]
+        [TestCase(Element.ROCK, Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
+        [TestCase(Element.SCISSORS, Element.PAPER, true)]
+        [TestCase(Element.SCISSORS, Element.ROCK, true)]
+        [TestCase(Element.PAPER, Element.PAPER, false)]
+        [TestCase(Element.PAPER, Element.SCISSORS, false)]
+        [TestCase(Element.PAPER, Element.ROCK, false)]
+        [TestCase(Element.ROCK, Element.ROCK, false)]
+        [TestCase(Element.ROCK, Element.PAPER, false)]
+        [TestCase(Element.ROCK, Element.SCISSORS, false)]
+        [TestCase(Element.SCISSORS, Element.SCISSORS, false)]
+        [TestCase(Element.SCISSORS, Element.PAPER, false)]
+        [TestCase(Element.SCISSORS, Element.ROCK, false)]
+
+        public void TestSwapElementsCardsSpell(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
+        {
+            SwapElementsCards(bluePlayerElement, redPlayerElement,isBluePlayer);
+        }
+
+        public void MakePlayerWinDuelInTieCase(Element playersElement, bool isBluePlayer)
+        {
+            var board = new Board(TestPlayers.FromElement(playersElement), TestPlayers.FromElement(playersElement));
+            TestBoards.FillBoardWithCardsFromDrawPhase(board);
+            var side = board.GetAllyBoardSide(isBluePlayer);
+            side.Player.AddMana(4);
+            side.Player.Hand.Spells[0] = SpellCard.FromType(SpellType.WIN_DUEL_TIE);
+            side.Player.Hand.Spells[0].AddToBoard(board, isBluePlayer, null);
+            board.SetSideReady(true);
+            board.SetSideReady(false);
+            board.EvaluateSpells();
+            var results = board.EvaluateCardColumns();
+            foreach (var result in results.Values)
+            {
+                Assert.That(result.CardFightResult,Is.Not.EqualTo(FightResult.DRAW));
+            }
+        }
+
+        [TestCase(Element.PAPER, true)]
+        [TestCase(Element.SCISSORS, true)]
+        [TestCase(Element.ROCK, true)]
+        [TestCase(Element.PAPER, false)]
+        [TestCase(Element.SCISSORS, false)]
+        [TestCase(Element.ROCK, false)]
+        public void TestWinDueTie(Element playersElement, bool isBluePlayer)
+        {
+            MakePlayerWinDuelInTieCase(playersElement, isBluePlayer);
+        }
         #endregion
     }
 }

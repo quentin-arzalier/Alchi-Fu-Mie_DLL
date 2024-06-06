@@ -21,5 +21,10 @@ namespace AFM_DLL.Models.UnityResults
         ///     Si un autre tour de carte sort doit être joué après celui ci
         /// </summary>
         public bool HasMoreSpells { get; internal set; }
+
+        /// <summary>
+        ///     Le nombre de cartes sorts qui vont être jouées
+        /// </summary>
+        public int SpellsStackSize { get; internal set; }
     }
 }

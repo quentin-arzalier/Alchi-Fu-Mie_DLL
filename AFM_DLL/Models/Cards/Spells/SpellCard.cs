@@ -58,6 +58,8 @@ namespace AFM_DLL.Models.Cards
                     return new ReplaceEnemyCardsWithRock();
                 case SpellType.REPLACE_ENEMY_CARDS_WITH_SCISSORS:
                     return new ReplaceEnemyCardsWithScissors();
+                case SpellType.SWAP_ENEMY_CARDS_WITH_PLAYER_CARDS:
+                    return new ReplaceEnemyCardsWithPlayerCards();
                 case SpellType.CANCEL_ENEMY_SPELL:
                     return new CancelEnemySpell();
                 case SpellType.WIN_DUEL_TIE:

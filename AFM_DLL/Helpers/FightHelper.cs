@@ -93,11 +93,13 @@ namespace AFM_DLL.Helpers
                 {
                     redBoard.Player.RemoveHealth(damageMultiplier);
                     res.RedDamage = damageMultiplier;
+                    res.HeroFightResult = FightResult.BLUE_WIN;
                 }
                 if (board.Modifiers.Any(c => c == BoardModifiers.RED_PLAYER_WIN_TIE))
                 {
                     blueBoard.Player.RemoveHealth(damageMultiplier);
                     res.BlueDamage = damageMultiplier;
+                    res.HeroFightResult = FightResult.RED_WIN;
                 }
                 if (board.Modifiers.All(c => c != BoardModifiers.RED_PLAYER_WIN_TIE && c != BoardModifiers.BLUE_PLAYER_WIN_TIE))
                 {
@@ -106,6 +108,10 @@ namespace AFM_DLL.Helpers
                     res.BlueDamage = damageMultiplier;
                     res.RedDamage = damageMultiplier;
                 }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             }
 
             return res;
