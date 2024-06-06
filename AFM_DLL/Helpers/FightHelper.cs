@@ -71,7 +71,9 @@ namespace AFM_DLL.Helpers
 
             var blueHero = blueBoard.Player.Deck.Hero;
             var redHero = redBoard.Player.Deck.Hero;
-            res.HeroFightResult = FightHelper.ElementFight(blueHero.ActiveElement, redHero.ActiveElement);
+            
+            if (res.CardFightResult == FightResult.DRAW)
+                res.HeroFightResult = FightHelper.ElementFight(blueHero.ActiveElement, redHero.ActiveElement);
 
             // TODO : Voir si on souhaite cumuler les double damage
             //var damageMultiplier = (uint)Math.Pow(2, board.Modifiers.Count(c => c == BoardModifiers.DOUBLE_DAMAGE));

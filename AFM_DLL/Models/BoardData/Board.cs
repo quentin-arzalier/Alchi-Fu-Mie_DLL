@@ -126,9 +126,13 @@ namespace AFM_DLL.Models.BoardData
                 throw new ApplicationException($"La fonction SetSideReady ne peut pas être appelée lorsque le plateau est en état {NextAction}.");
             var side = GetAllyBoardSide(isBlueSide);
             side.IsSideReady = true;
-            side.Player.Deck.Hero.CanRevertOverride = false;
-            if (side.Player.Deck.Hero.OverrideCard != null)
+
+            if (side.Player.Deck.Hero.CanRevertOverride)
+            {
+                side.Player.Deck.Hero.CanRevertOverride = false;
                 side.Player.Deck.Elements.Add(side.Player.Deck.Hero.OverrideCard);
+                side.Player.Deck.Hero.OverrideCard = new ElementCard(side.Player.Deck.Hero.ActiveElement);
+            }
 
             if (BlueSide.IsSideReady && RedSide.IsSideReady)
             {
