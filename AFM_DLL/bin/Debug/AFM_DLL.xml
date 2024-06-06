@@ -765,6 +765,17 @@
                 Représente le deck d'un joueur.
             </summary>
         </member>
+        <member name="M:AFM_DLL.Models.PlayerInfo.Deck.#ctor">
+            <summary>
+                Constructeur vide du deck
+            </summary>
+        </member>
+        <member name="M:AFM_DLL.Models.PlayerInfo.Deck.#ctor(AFM_DLL.Models.PlayerInfo.Deck)">
+            <summary>
+                Constructeur par copie du deck
+            </summary>
+            <param name="original">Le deck à copier</param>
+        </member>
         <member name="P:AFM_DLL.Models.PlayerInfo.Deck.Hero">
             <summary>
                 Le héros du joueur

@@ -11,6 +11,22 @@ namespace AFM_DLL.Models.PlayerInfo
     public class Deck
     {
         /// <summary>
+        ///     Constructeur vide du deck
+        /// </summary>
+        public Deck() { }
+
+        /// <summary>
+        ///     Constructeur par copie du deck
+        /// </summary>
+        /// <param name="original">Le deck à copier</param>
+        public Deck(Deck original)
+        {
+            Hero = new Hero(original.Hero.Name, original.Hero.ActiveElement);
+            Elements = original.Elements.Select(c => new ElementCard(c.ActiveElement)).ToList();
+            Spells = original.Spells.Select(c => SpellCard.FromType(c.SpellType)).ToList();
+        }
+
+        /// <summary>
         ///     Le héros du joueur
         /// </summary>
         public Hero Hero { get; set; }
