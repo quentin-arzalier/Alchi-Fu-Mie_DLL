@@ -271,7 +271,7 @@ namespace AFM_Tests
         [TestCase(Element.SCISSORS, Element.SCISSORS, true)]
         public void TestReplaceEnemyScissorsWithRock(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)
         {
-            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.SCISSORS, Element.PAPER, isBluePlayer);
+            TransformEnemyElementIntoElement(bluePlayerElement, redPlayerElement, Element.SCISSORS, Element.ROCK, isBluePlayer);
         }
         private void TransformEnemyElementIntoElement(Element targetElement, bool isBlueSideSpell)
         {
