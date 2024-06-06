@@ -36,13 +36,6 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         }
 
         /// <inheritdoc/>
-<<<<<<< Updated upstream
-        public override SpellType SpellType => SpellType.REPLACE_ENEMY_CARDS_WITH_PLAYER_CARDS;
-=======
-        public override SpellType GetSpellType()
-        {
-            return SpellType.SWAP_ENEMY_CARDS_WITH_PLAYER_CARDS;
-        }
->>>>>>> Stashed changes
+        public override SpellType SpellType => SpellType.SWAP_ENEMY_CARDS_WITH_PLAYER_CARDS;
     }
 }

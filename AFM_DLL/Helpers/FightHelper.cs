@@ -108,10 +108,6 @@ namespace AFM_DLL.Helpers
                     res.BlueDamage = damageMultiplier;
                     res.RedDamage = damageMultiplier;
                 }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
             }
 
             return res;
