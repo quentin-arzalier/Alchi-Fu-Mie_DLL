@@ -315,30 +315,30 @@ namespace AFM_Tests
             TransformEnemyElementIntoElement(targetElement, isBluePlayer);
         }
 
-        public void DisableCanBeActivatedSpell(SpellType redPlayerSpellType, bool isBlueSideSpell)
+        public void DisableCanBeActivatedSpell(bool isBlueSideSpell)
         {
             var board = new Board(TestPlayers.GetVariousElementPlayer(), TestPlayers.GetVariousElementPlayer());
             TestBoards.FillBoardWithCardsFromDrawPhase(board);
 
             var side = board.GetAllyBoardSide(isBlueSideSpell);
             var enemySide = board.GetEnemyBoardSide(isBlueSideSpell);
-            side.Player.AddMana(3);
-            enemySide.Player.AddMana(3);
+            side.Player.AddMana(10);
+            enemySide.Player.AddMana(10);
+            side.Player.Hand.Spells[0] = SpellCard.FromType(SpellType.CANCEL_ENEMY_SPELL);
             side.Player.Hand.Spells[0].AddToBoard(board, isBlueSideSpell, null);
             enemySide.Player.Hand.Spells[0].AddToBoard(board, isBlueSideSpell, null);
             board.SetSideReady(true);
             board.SetSideReady(false);
             var res = board.EvaluateSpells();
-            var expectedSpellStackSize = 1;
-            Assert.That(res.SpellsStackSize, Is.EqualTo(expectedSpellStackSize));
+
+            Assert.That(res.HasMoreSpells, Is.False);
         }
 
-        [TestCase(SpellType.ADD_MANA_FROM_PAPER, false)]
-        [TestCase(SpellType.ADD_MANA_FROM_ROCK, false)]
-        [TestCase(SpellType.ADD_MANA_FROM_SCISSORS, false)]
-        public void TestCancelEnemySpell(SpellType redPlayerSpellType, bool isBludSideSpell)
+        [TestCase(false)]
+        [TestCase(true)]
+        public void TestCancelEnemySpell(bool isBlueSideSpell)
         {
-            DisableCanBeActivatedSpell(redPlayerSpellType, isBludSideSpell);
+            DisableCanBeActivatedSpell(isBlueSideSpell);
         }
 
         public void SwapElementsCards(Element bluePlayerElement, Element redPlayerElement, bool isBluePlayer)

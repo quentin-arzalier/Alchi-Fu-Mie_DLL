@@ -155,7 +155,6 @@ namespace AFM_DLL.Models.BoardData
                 _spellCardResults = FightHelper.GetOrderedSpellCards(this);
 
             var res = new SpellCardEvaluationResult();
-            res.SpellsStackSize = _spellCardResults.SpellsInOrder.Count;
 
             if (_spellCardResults.SpellsInOrder.Any())
             {
