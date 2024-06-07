@@ -46,7 +46,7 @@ namespace AFM_DLL.Models.PlayerInfo
             get { return _overrideCard; }
             internal set
             {
-                if (_overrideCard == null || _overrideCard.ActiveElement != value.ActiveElement)
+                if (_overrideCard?.ActiveElement != value?.ActiveElement)
                     OverrideCardChanged?.Invoke(value);
                 _overrideCard = value;
             }
