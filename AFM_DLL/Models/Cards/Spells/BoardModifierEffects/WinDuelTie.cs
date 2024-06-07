@@ -14,7 +14,7 @@ namespace AFM_DLL.Models.Cards.Spells.WinDuelTie
         /// <inheritdoc/>
         public override string GetDescription()
         {
-            return "Permet de gagner les duels de héros finissant en égalité";
+            return "Permet de gagner les duels finissant en égalité";
         }
 
         /// <inheritdoc/>

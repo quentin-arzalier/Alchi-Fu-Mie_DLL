@@ -398,7 +398,8 @@ namespace AFM_Tests
             var results = board.EvaluateCardColumns();
             foreach (var result in results.Values)
             {
-                Assert.That(result.HeroFightResult,Is.Not.EqualTo(FightResult.DRAW));
+                Assert.That(result.CardFightResult, Is.Not.EqualTo(FightResult.DRAW));
+                Assert.That(result.HeroFightResult, Is.Null);
             }
         }
 
