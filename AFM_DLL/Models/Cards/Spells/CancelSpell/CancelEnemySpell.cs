@@ -17,7 +17,7 @@ namespace AFM_DLL.Models.Cards.Spells.CancelSpell
         /// <inheritdoc/>
         public override string GetDescription()
         {
-            return "Remplace toute les cartes de l'adversaire par des cartes Feuille.";
+            return "Annule le sort de l'adversaire.";
         }
 
         /// <inheritdoc/>
