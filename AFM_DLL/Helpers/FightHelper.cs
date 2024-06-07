@@ -94,7 +94,7 @@ namespace AFM_DLL.Helpers
                 res.BlueDamage = damageMultiplier;
                 res.CardFightResult = FightResult.RED_WIN;
             }
-            else if (blueWinsTie == redWinsTie)
+            if (res.CardFightResult == FightResult.DRAW && res.HeroFightResult == FightResult.DRAW && blueWinsTie == redWinsTie)
             {
                 redBoard.Player.RemoveHealth(damageMultiplier);
                 blueBoard.Player.RemoveHealth(damageMultiplier);
