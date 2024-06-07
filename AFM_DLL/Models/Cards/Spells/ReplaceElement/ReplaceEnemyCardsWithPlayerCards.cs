@@ -26,13 +26,13 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         /// <inheritdoc/>
         public override string GetDescription()
         {
-            return "Echange le type des cartes pour chaque couloir";
+            return "Échange le type des cartes pour chaque couloir";
         }
 
         /// <inheritdoc/>
         public override uint GetManaCost()
         {
-            return 3;
+            return 4;
         }
 
         /// <inheritdoc/>

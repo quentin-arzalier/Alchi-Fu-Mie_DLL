@@ -24,7 +24,7 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         /// <inheritdoc/>
         public override string GetDescription()
         {
-            return "Remplace les cartes Pierre de l'adversaire par des cartes Feuille.";
+            return "Remplace les cartes Pierre de l'adversaire par des cartes Feuille";
         }
 
         /// <inheritdoc/>

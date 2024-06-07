@@ -24,7 +24,7 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         /// <inheritdoc/>
         public override string GetDescription()
         {
-            return "Remplace les cartes Feuille de l'adversaire par des cartes Ciseaux.";
+            return "Remplace les cartes Feuille de l'adversaire par des cartes Ciseaux";
         }
 
         /// <inheritdoc/>

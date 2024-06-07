@@ -154,6 +154,7 @@ namespace AFM_DLL.Models.Cards
             if (position.HasValue)
                 return false;
 
+            this.CanBeActived = true;
             side.SpellCard = null;
             side.Player.Defausse.Add(this);
 

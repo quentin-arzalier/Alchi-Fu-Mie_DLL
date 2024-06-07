@@ -17,7 +17,7 @@ namespace AFM_DLL.Models.Cards.Spells
         /// <inheritdoc/>
         public override string GetDescription()
         {
-            return "Double les dégâts infligés par vous ET votre adversaire pour ce tour uniquement.";
+            return "Double les dégâts infligés par vous ET votre adversaire pour ce tour uniquement";
         }
 
         /// <inheritdoc/>

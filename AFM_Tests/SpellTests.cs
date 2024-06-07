@@ -282,7 +282,7 @@ namespace AFM_Tests
 
             var side = board.GetAllyBoardSide(isBlueSideSpell);
             var enemySide = board.GetEnemyBoardSide(isBlueSideSpell);
-            side.Player.AddMana(2);
+            side.Player.AddMana(250);
 
             side.Player.Hand.Spells[0] = SpellCard.FromType(targetElement switch
             {
@@ -348,7 +348,7 @@ namespace AFM_Tests
             var playerCards = board.GetAllyBoardSide(isBluePlayer).AllElementsOfSide.Select(x => x.ActiveElement).ToList();
             var enemyCards = board.GetEnemyBoardSide(isBluePlayer).AllElementsOfSide.Select(x => x.ActiveElement).ToList();
             var side = board.GetAllyBoardSide(isBluePlayer);
-            side.Player.AddMana(2);
+            side.Player.AddMana(250);
             side.Player.Hand.Spells[0] = SpellCard.FromType(SpellType.SWAP_ENEMY_CARDS_WITH_PLAYER_CARDS);
             side.Player.Hand.Spells[0].AddToBoard(board, isBluePlayer, null);
             board.SetSideReady(true);

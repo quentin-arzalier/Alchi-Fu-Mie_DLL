@@ -22,13 +22,13 @@ namespace AFM_DLL.Models.Cards.Spells.ReplaceElement
         /// <inheritdoc/>
         public override string GetDescription()
         {
-            return "Remplace toute les cartes de l'adversaire par des cartes Ciseaux.";
+            return "Remplace toutes les cartes de l'adversaire par des cartes Ciseaux";
         }
 
         /// <inheritdoc/>
         public override uint GetManaCost()
         {
-            return 3;
+            return 5;
         }
 
         /// <inheritdoc/>

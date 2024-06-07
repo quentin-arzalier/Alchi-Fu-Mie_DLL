@@ -14,7 +14,7 @@ namespace AFM_DLL.Models.Cards.Spells.WinDuelTie
         /// <inheritdoc/>
         public override string GetDescription()
         {
-            return "Fait gagner le duel en cas d'egalite au joueur ayant lance ce sort.";
+            return "Permet de gagner les duels de héros finissant en égalité";
         }
 
         /// <inheritdoc/>
