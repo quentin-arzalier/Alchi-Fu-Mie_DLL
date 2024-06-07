@@ -72,29 +72,41 @@ namespace AFM_DLL.Helpers
             var blueHero = blueBoard.Player.Deck.Hero;
             var redHero = redBoard.Player.Deck.Hero;
 
-            bool blueWinsTie = board.Modifiers.Any(c => c == BoardModifiers.BLUE_PLAYER_WIN_TIE) && res.CardFightResult == FightResult.DRAW;
-            bool redWinsTie = board.Modifiers.Any(c => c == BoardModifiers.RED_PLAYER_WIN_TIE) && res.CardFightResult == FightResult.DRAW;
+            bool blueWinsTie = board.Modifiers.Any(c => c == BoardModifiers.BLUE_PLAYER_WIN_TIE);
+            bool redWinsTie = board.Modifiers.Any(c => c == BoardModifiers.RED_PLAYER_WIN_TIE);
 
-            if (res.CardFightResult == FightResult.DRAW && blueWinsTie == redWinsTie)
-                res.HeroFightResult = FightHelper.ElementFight(blueHero.ActiveElement, redHero.ActiveElement);
+            if (redWinsTie && blueWinsTie)
+            {
+                blueWinsTie = false;
+                redWinsTie = false;
+            }
+
+
+            if (res.CardFightResult == FightResult.DRAW)
+            {
+                if (blueWinsTie)
+                    res.CardFightResult = FightResult.BLUE_WIN;
+                else if (redWinsTie)
+                    res.CardFightResult = FightResult.RED_WIN;
+                else
+                    res.HeroFightResult = FightHelper.ElementFight(blueHero.ActiveElement, redHero.ActiveElement);
+            }
 
             // TODO : Voir si on souhaite cumuler les double damage
             //var damageMultiplier = (uint)Math.Pow(2, board.Modifiers.Count(c => c == BoardModifiers.DOUBLE_DAMAGE));
             uint damageMultiplier = (uint)(board.Modifiers.Any(c => c == BoardModifiers.DOUBLE_DAMAGE) ? 2 : 1);
 
-            if (res.CardFightResult == FightResult.BLUE_WIN || res.HeroFightResult == FightResult.BLUE_WIN || blueWinsTie)
+            if (res.CardFightResult == FightResult.BLUE_WIN || res.HeroFightResult == FightResult.BLUE_WIN)
             {
                 redBoard.Player.RemoveHealth(damageMultiplier);
                 res.RedDamage = damageMultiplier;
-                res.CardFightResult = FightResult.BLUE_WIN;
             }
-            if (res.CardFightResult == FightResult.RED_WIN || res.HeroFightResult == FightResult.RED_WIN || redWinsTie)
+            else if (res.CardFightResult == FightResult.RED_WIN || res.HeroFightResult == FightResult.RED_WIN)
             {
                 blueBoard.Player.RemoveHealth(damageMultiplier);
                 res.BlueDamage = damageMultiplier;
-                res.CardFightResult = FightResult.RED_WIN;
             }
-            if (res.CardFightResult == FightResult.DRAW && res.HeroFightResult == FightResult.DRAW && blueWinsTie == redWinsTie)
+            else if (res.CardFightResult == FightResult.DRAW && res.HeroFightResult == FightResult.DRAW)
             {
                 redBoard.Player.RemoveHealth(damageMultiplier);
                 blueBoard.Player.RemoveHealth(damageMultiplier);
