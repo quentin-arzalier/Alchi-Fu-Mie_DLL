@@ -3,6 +3,7 @@ using AFM_DLL.Converters;
 using AFM_DLL.Models.Cards;
 using AFM_DLL.Models.Enum;
 using AFM_DLL.Models.PlayerInfo;
+using AFM_DLL.Models.Unlockables;
 using AFM_Tests.TestData;
 using Newtonsoft.Json;
 
@@ -59,10 +60,26 @@ namespace AFM_Tests
             Assert.That(jsonSpellCard.SpellType, Is.EqualTo(spellCard.SpellType));
         }
 
+        [TestCase(CardBackType.DEFAULT)]
+        [TestCase(CardBackType.ROCK)]
+        [TestCase(CardBackType.PAPER)]
+        [TestCase(CardBackType.SCISSORS)]
+        [TestCase(CardBackType.LIGHT)]
+        [TestCase(CardBackType.DARK)]
+        public void SerializeDeserializeCardBackTest(CardBackType type)
+        {
+            var cardBack = CardBack.FromType(type);
+            var json = JsonConvert.SerializeObject(cardBack);
+            var jsonCardBack = JsonConvert.DeserializeObject<CardBack>(json, new CardBackConverter());
+            Assert.That(jsonCardBack, Is.Not.Null);
+            Assert.That(jsonCardBack.BackType, Is.EqualTo(cardBack.BackType));
+        }
+
         [TestCase(Element.ROCK)]
         [TestCase(Element.PAPER)]
         [TestCase(Element.SCISSORS)]
-        public void SerializeDeserializeWholeDeckTest(Element deckElt) {
+        public void SerializeDeserializeWholeDeckTest(Element deckElt)
+        {
             var deck = TestDecks.GetElementDeck(deckElt);
             var json = JsonConvert.SerializeObject(deck);
             var jsonDeck = JsonConvert.DeserializeObject<Deck>(json, new SpellCardConverter());

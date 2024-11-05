@@ -45,8 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\EmoteConverter.cs" />
+    <Compile Include="Converters\CardBackConverter.cs" />
     <Compile Include="Converters\SpellCardConverter.cs" />
     <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Helpers\GachaHelper.cs" />
     <Compile Include="Models\BoardData\Board.cs" />
     <Compile Include="Models\BoardData\BoardModifiers.cs" />
     <Compile Include="Models\BoardData\BoardPosition.cs" />
@@ -74,7 +77,12 @@
     <Compile Include="Models\Cards\Spells\BoardModifierEffects\WinDuelTie.cs" />
     <Compile Include="Models\Enum\Element.cs" />
     <Compile Include="Models\Enum\FightResult.cs" />
+    <Compile Include="Models\Unlockables\CardBack.cs" />
+    <Compile Include="Models\Unlockables\Emote.cs" />
+    <Compile Include="Models\Unlockables\Rarity.cs" />
     <Compile Include="Models\Enum\SpellType.cs" />
+    <Compile Include="Models\Unlockables\IUnlockable.cs" />
+    <Compile Include="Models\PlayerInfo\Account.cs" />
     <Compile Include="Models\PlayerInfo\Deck.cs" />
     <Compile Include="Models\PlayerInfo\Hand.cs" />
     <Compile Include="Models\PlayerInfo\Hero.cs" />
@@ -88,6 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

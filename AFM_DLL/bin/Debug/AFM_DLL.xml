@@ -4,6 +4,28 @@
         <name>AFM_DLL</name>
     </assembly>
     <members>
+        <member name="T:AFM_DLL.Converters.EmoteConverter">
+            <summary>
+                Permet la désérialisation d'un dos de carte
+            </summary>
+        </member>
+        <member name="M:AFM_DLL.Converters.EmoteConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AFM_DLL.Converters.EmoteConverter.Create(System.Type)">
+            <inheritdoc/>
+        </member>
+        <member name="T:AFM_DLL.Converters.CardBackConverter">
+            <summary>
+                Permet la désérialisation d'un dos de carte
+            </summary>
+        </member>
+        <member name="M:AFM_DLL.Converters.CardBackConverter.ReadJson(Newtonsoft.Json.JsonReader,System.Type,System.Object,Newtonsoft.Json.JsonSerializer)">
+            <inheritdoc/>
+        </member>
+        <member name="M:AFM_DLL.Converters.CardBackConverter.Create(System.Type)">
+            <inheritdoc/>
+        </member>
         <member name="T:AFM_DLL.Converters.SpellCardConverter">
             <summary>
                 Permet la désérialisation d'une carte sortilège
@@ -29,6 +51,66 @@
             <summary>
             Retire et renvoie le premier élément de la liste
             </summary>
+        </member>
+        <member name="T:AFM_DLL.Helpers.GachaHelper">
+            <summary>
+                Réalise les opérations de Gacha
+            </summary>
+        </member>
+        <member name="M:AFM_DLL.Helpers.GachaHelper.NormalGacha(AFM_DLL.Models.PlayerInfo.Account)">
+            <summary>
+                Réalise une partie de gacha normale si le joueur a assez de pièces (1500)
+            </summary>
+            <param name="acc">Le joueur qui joue au gacha normal</param>
+            <returns>Un déblocable de commun à épique, ou null si le joueur n'a pas assez de pièces</returns>
+        </member>
+        <member name="M:AFM_DLL.Helpers.GachaHelper.PremiumGacha(AFM_DLL.Models.PlayerInfo.Account)">
+            <summary>
+                Réalise une partie de gacha premium si le joueur a assez de gemmes (150)
+            </summary>
+            <param name="acc">Le joueur qui joue au gacha premium</param>
+            <returns>Un déblocable de épique à légendaire, ou null si le joueur n'a pas assez de gemmes</returns>
+        </member>
+        <member name="T:AFM_DLL.Helpers.FightHelper">
+            <summary>
+            Contient des méthodes pratiques pour la partie
+            </summary>
+        </member>
+        <member name="M:AFM_DLL.Helpers.FightHelper.ElementFight(AFM_DLL.Element,AFM_DLL.Element)">
+            <summary>
+            Réalise un duel entre deux éléments et indique l'issue du combat par rapport à l'élément de base
+            </summary>
+            <param name="blueCard">
+                L'élément bleu du duel.
+            </param>
+            <param name="redCard">
+                L'élément rouge du duel
+            </param>
+            <returns>
+                Une enum indiquant l'issue du combat
+            </returns>
+        </member>
+        <member name="M:AFM_DLL.Helpers.FightHelper.EvaluateColumnFight(AFM_DLL.Models.BoardData.Board,AFM_DLL.Models.BoardData.BoardPosition)">
+            <summary>
+                Effectue les opérations d'un combat de colonne et inflige les dégâts corrects aux joueurs.
+            </summary>
+            <param name="board">
+                Le plateau de jeu à évaluer
+            </param>
+            <param name="column">
+                La colonne à évaluer
+            </param>
+            <returns>
+                Le résultat du combat pour la colonne
+            </returns>
+        </member>
+        <member name="M:AFM_DLL.Helpers.FightHelper.GetOrderedSpellCards(AFM_DLL.Models.BoardData.Board)">
+            <summary>
+                Renvoie les cartes sortilèges dans l'ordre d'évaluation en fonction des héros.
+                Si les héros ont le même type, le résultat est aléatoire.
+            </summary>
+            <param name="board">Le plateau qui contient les cartes sortilèges à évaluer</param>
+            <returns>La liste ordonnées des cartes sortilèges ainsi que leur côté</returns>
         </member>
         <member name="T:AFM_DLL.Models.BoardData.Board">
             <summary>
@@ -760,6 +842,162 @@
                 Fait gagner le duel en cas d'egalite au joueur ayant lance ce sort.
             </summary>
         </member>
+        <member name="T:AFM_DLL.Models.Unlockables.CardBack">
+            <summary>
+                Représente un type de dos de carte
+            </summary>
+        </member>
+        <member name="M:AFM_DLL.Models.Unlockables.CardBack.FromType(AFM_DLL.Models.Unlockables.CardBackType)">
+            <summary>
+                Instancie un dos de carte du type spécifié
+            </summary>
+            <param name="backType">Le type de dos de carte à créer</param>
+            <returns>Un dos de carte</returns>
+        </member>
+        <member name="P:AFM_DLL.Models.Unlockables.CardBack.BackType">
+            <summary>
+                Le type de dos du dos de carte
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.Unlockables.CardBack.Rarity">
+            <inheritdoc/>
+        </member>
+        <member name="P:AFM_DLL.Models.Unlockables.CardBack.Name">
+            <inheritdoc/>
+        </member>
+        <member name="T:AFM_DLL.Models.Unlockables.CardBackType">
+            <summary>
+                Types de dos de carte
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.CardBackType.DEFAULT">
+            <summary>
+                Dos de carte par défaut
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.CardBackType.ROCK">
+            <summary>
+                Dos de carte thème pierre
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.CardBackType.PAPER">
+            <summary>
+                Dos de carte thème feuille
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.CardBackType.SCISSORS">
+            <summary>
+                Dos de carte thème ciseaux
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.CardBackType.LIGHT">
+            <summary>
+                Dos de carte thème lumière
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.CardBackType.DARK">
+            <summary>
+                Dos de carte thème ténèbres
+            </summary>
+        </member>
+        <member name="T:AFM_DLL.Models.Unlockables.Emote">
+            <summary>
+                Représente une emote
+            </summary>
+        </member>
+        <member name="M:AFM_DLL.Models.Unlockables.Emote.FromType(AFM_DLL.Models.Unlockables.EmoteType)">
+            <summary>
+                Instancie une emote du type spécifié
+            </summary>
+            <param name="emoteType">Le type d'emote à créer</param>
+            <returns>Une emote</returns>
+        </member>
+        <member name="P:AFM_DLL.Models.Unlockables.Emote.EmoteType">
+            <summary>
+                Type de l'emote
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.Unlockables.Emote.Rarity">
+            <inheritdoc/>
+        </member>
+        <member name="P:AFM_DLL.Models.Unlockables.Emote.Name">
+            <inheritdoc/>
+        </member>
+        <member name="T:AFM_DLL.Models.Unlockables.EmoteType">
+            <summary>
+                Représente les types d'emote de l'application
+            </summary>
+        </member>
+        <member name="T:AFM_DLL.Models.Unlockables.Rarity">
+            <summary>
+                Représente la rareté des objets du Gacha
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.Rarity.COMMON">
+            <summary>
+                Rareté la plus basse, pas obtenable dans le gacha premium
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.Rarity.RARE">
+            <summary>
+                Rareté moyenne du gacha normal, mais la plus basse du gacha premium
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.Rarity.EPIC">
+            <summary>
+                Rareté la plus élevée du gacha normal, moyenne du gacha premium
+            </summary>
+        </member>
+        <member name="F:AFM_DLL.Models.Unlockables.Rarity.LEGENDARY">
+            <summary>
+                Rareté la plus élevée du gacha premium, introuvable dans le gacha normal
+            </summary>
+        </member>
+        <member name="T:AFM_DLL.Models.Unlockables.IUnlockable">
+            <summary>
+                Représente les objets déblocables 
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.Unlockables.IUnlockable.Rarity">
+            <summary>
+                Rareté de l'objet déblocable
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.Unlockables.IUnlockable.Name">
+            <summary>
+                Nom de l'objet déblocable
+            </summary>
+        </member>
+        <member name="T:AFM_DLL.Models.PlayerInfo.Account">
+            <summary>
+                Représente le compte du joueur et les informations qui vont avec
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.PlayerInfo.Account.CurrentDeck">
+            <summary>
+                Le deck actuel du joueur
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.PlayerInfo.Account.CoinCount">
+            <summary>
+                Nombre de pièces (monnaie courante) du joueur
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.PlayerInfo.Account.GemCount">
+            <summary>
+                Nombre de gemmes (monnaie premium) du joueur
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.PlayerInfo.Account.UnlockableInventory">
+            <summary>
+                Récupère les objets déblocables du joueur
+            </summary>
+        </member>
+        <member name="P:AFM_DLL.Models.PlayerInfo.Account.UnlockedCardBacks">
+            <summary>
+                Les dos de carte débloqués par le joueur
+            </summary>
+        </member>
         <member name="T:AFM_DLL.Models.PlayerInfo.Deck">
             <summary>
                 Représente le deck d'un joueur.
@@ -1081,47 +1319,6 @@
             <summary>
                 Indique si le jet de pièce a été favorable à l'équipe bleue en cas d'égalité
             </summary>
-        </member>
-        <member name="T:AFM_DLL.Helpers.FightHelper">
-            <summary>
-            Contient des méthodes pratiques pour la partie
-            </summary>
-        </member>
-        <member name="M:AFM_DLL.Helpers.FightHelper.ElementFight(AFM_DLL.Element,AFM_DLL.Element)">
-            <summary>
-            Réalise un duel entre deux éléments et indique l'issue du combat par rapport à l'élément de base
-            </summary>
-            <param name="blueCard">
-                L'élément bleu du duel.
-            </param>
-            <param name="redCard">
-                L'élément rouge du duel
-            </param>
-            <returns>
-                Une enum indiquant l'issue du combat
-            </returns>
-        </member>
-        <member name="M:AFM_DLL.Helpers.FightHelper.EvaluateColumnFight(AFM_DLL.Models.BoardData.Board,AFM_DLL.Models.BoardData.BoardPosition)">
-            <summary>
-                Effectue les opérations d'un combat de colonne et inflige les dégâts corrects aux joueurs.
-            </summary>
-            <param name="board">
-                Le plateau de jeu à évaluer
-            </param>
-            <param name="column">
-                La colonne à évaluer
-            </param>
-            <returns>
-                Le résultat du combat pour la colonne
-            </returns>
-        </member>
-        <member name="M:AFM_DLL.Helpers.FightHelper.GetOrderedSpellCards(AFM_DLL.Models.BoardData.Board)">
-            <summary>
-                Renvoie les cartes sortilèges dans l'ordre d'évaluation en fonction des héros.
-                Si les héros ont le même type, le résultat est aléatoire.
-            </summary>
-            <param name="board">Le plateau qui contient les cartes sortilèges à évaluer</param>
-            <returns>La liste ordonnées des cartes sortilèges ainsi que leur côté</returns>
         </member>
         <member name="T:AFM_DLL.Element">
             <summary>
